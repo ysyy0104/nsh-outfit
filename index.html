@@ -55,122 +55,113 @@
     <div id="list" class="grid">載入中...</div>
   </div>
 
-  <script type="module">
-    import { initializeApp } from "https://gstatic.com/";
-    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://gstatic.com/";
-    import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://gstatic.com/";
+  <script src="https://gstatic.com"></script>
+  <script src="https://gstatic.com"></script>
+  <script src="https://gstatic.com"></script>
 
-    // 👇 請把下面這整個 const firebaseConfig = { ... }; 刪掉，貼上你在 Firebase 複製的那一段 👇
-   const firebaseConfig = {
-  apiKey: "AIzaSyC42rOglp4rkM9jo5KsJt-CPT6uJK3NN_0",
-  authDomain: "nsh-db-1321c.firebaseapp.com",
-  projectId: "nsh-db-1321c",
-  storageBucket: "nsh-db-1321c.firebasestorage.app",
-  messagingSenderId: "887842444277",
-  appId: "1:887842444277:web:0feb01d27c05c8f21bc6bc"
-};
-    // 👆 替換結束 👆
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyC42rOglp4rkM9jo5KsJt-CPT6uJK3NN_O",
+      authDomain: "://firebaseapp.com",
+      projectId: "nsh-db-1321c",
+      storageBucket: "nsh-db-1321c.firebasestorage.app",
+      messagingSenderId: "887842444277",
+      appId: "1:887842444277:web:0feb01d27c05c8f21bc6bc"
+    };
 
-    try {
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      const db = getFirestore(app);
-      let allOutfits = [];
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    let allOutfits = [];
 
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          document.getElementById('login-view').classList.add('hidden');
-          document.getElementById('app-view').classList.remove('hidden');
-          loadOutfits();
-        } else {
-          document.getElementById('login-view').classList.remove('hidden');
-          document.getElementById('app-view').classList.add('hidden');
-        }
-      });
-
-      // 綁定登入按鈕
-      document.getElementById('login-btn').addEventListener('click', async () => {
-        const email = document.getElementById('email').value.trim();
-        const pw = document.getElementById('password').value;
-        const msgEl = document.getElementById('login-msg');
-        msgEl.innerText = "正在驗證登入...";
-        try {
-          await signInWithEmailAndPassword(auth, email, pw);
-          msgEl.innerText = "";
-        } catch (e) {
-          msgEl.innerText = "登入失敗：" + e.message;
-        }
-      });
-
-      document.getElementById('logout-btn').addEventListener('click', () => signOut(auth));
-      document.getElementById('toggle-form-btn').addEventListener('click', () => {
-        document.getElementById('add-form').classList.toggle('hidden');
-      });
-
-      document.getElementById('save-btn').addEventListener('click', async () => {
-        const name = document.getElementById('name').value.trim();
-        if (!name) return alert("請填寫外觀名稱！");
-        const btn = document.getElementById('save-btn');
-        btn.disabled = true; btn.innerText = "儲存中...";
-
-        try {
-          const urls = document.getElementById('imageUrls').value.split('\n').map(u => u.trim()).filter(Boolean);
-          await addDoc(collection(db, "outfits"), {
-            category: document.getElementById('category').value,
-            name: name,
-            price: document.getElementById('price').value,
-            tags: document.getElementById('tags').value.split(',').map(t => t.trim()).filter(Boolean),
-            twDate: document.getElementById('twDate').value,
-            note: document.getElementById('note').value,
-            images: urls,
-            createdAt: Date.now()
-          });
-          alert("儲存成功！");
-          document.getElementById('add-form').classList.add('hidden');
-          loadOutfits();
-        } catch (e) {
-          alert("儲存失敗：" + e.message);
-        } finally {
-          btn.disabled = false; btn.innerText = "儲存至雲端";
-        }
-      });
-
-      async function loadOutfits() {
-        const listEl = document.getElementById('list');
-        listEl.innerHTML = "載入資料中...";
-        try {
-          const q = query(collection(db, "outfits"), orderBy("createdAt", "desc"));
-          const snapshot = await getDocs(q);
-          allOutfits = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-          renderList();
-        } catch (e) {
-          listEl.innerHTML = "讀取資料失敗：" + e.message;
-        }
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        document.getElementById('login-view').classList.add('hidden');
+        document.getElementById('app-view').classList.remove('hidden');
+        loadOutfits();
+      } else {
+        document.getElementById('login-view').classList.remove('hidden');
+        document.getElementById('app-view').classList.add('hidden');
       }
+    });
 
-      function renderList() {
-        const kw = document.getElementById('search').value.toLowerCase();
-        const filtered = allOutfits.filter(o => 
-          o.name.toLowerCase().includes(kw) || (o.tags && o.tags.some(t => t.toLowerCase().includes(kw)))
-        );
-        document.getElementById('list').innerHTML = filtered.length ? filtered.map(o => `
-          <div class="card">
-            ${o.images && o.images ? <img src="${o.images}"> : `<div style="height:220px;background:#333;display:flex;align-items:center;justify-content:center;">無圖片</div>`}
-            <div class="card-body">
-              <div style="font-size:12px;color:#aaa;">${o.category || '未分類'} · ${o.twDate || '日期待定'}</div>
-              <h4 style="margin:5px 0;">${o.name}</h4>
-              <div style="color:#f5a623;font-size:14px;">${o.price || ''}</div>
-              <div style="margin-top:6px;">${(o.tags || []).map(t => `<span class="tag">${t}</span>`).join('')}</div>
-            </div>
-          </div>
-        `).join('') : "目前尚無外觀資料";
+    document.getElementById('login-btn').addEventListener('click', async () => {
+      const email = document.getElementById('email').value.trim();
+      const pw = document.getElementById('password').value;
+      const msgEl = document.getElementById('login-msg');
+      msgEl.innerText = "正在驗證登入...";
+      try {
+        await auth.signInWithEmailAndPassword(email, pw);
+        msgEl.innerText = "";
+      } catch (e) {
+        msgEl.innerText = "登入失敗：" + e.message;
       }
+    });
 
-      document.getElementById('search').addEventListener('input', renderList);
+    document.getElementById('logout-btn').addEventListener('click', () => auth.signOut());
+    document.getElementById('toggle-form-btn').addEventListener('click', () => {
+      document.getElementById('add-form').classList.toggle('hidden');
+    });
 
-    } catch (err) {
-      document.getElementById('login-msg').innerText = "Firebase 設定錯誤：" + err.message;
+    document.getElementById('save-btn').addEventListener('click', async () => {
+      const name = document.getElementById('name').value.trim();
+      if (!name) return alert("請填寫外觀名稱！");
+      const btn = document.getElementById('save-btn');
+      btn.disabled = true; btn.innerText = "儲存中...";
+
+      try {
+        const urls = document.getElementById('imageUrls').value.split('\n').map(u => u.trim()).filter(Boolean);
+        await db.collection("outfits").add({
+          category: document.getElementById('category').value,
+          name: name,
+          price: document.getElementById('price').value,
+          tags: document.getElementById('tags').value.split(',').map(t => t.trim()).filter(Boolean),
+          twDate: document.getElementById('twDate').value,
+          note: document.getElementById('note').value,
+          images: urls,
+          createdAt: Date.now()
+        });
+        alert("儲存成功！");
+        document.getElementById('add-form').classList.add('hidden');
+        loadOutfits();
+      } catch (e) {
+        alert("儲存失敗：" + e.message);
+      } finally {
+        btn.disabled = false; btn.innerText = "儲存至雲端";
+      }
+    });
+
+    async function loadOutfits() {
+      const listEl = document.getElementById('list');
+      listEl.innerHTML = "載入資料中...";
+      try {
+        const snapshot = await db.collection("outfits").orderBy("createdAt", "desc").get();
+        allOutfits = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        renderList();
+      } catch (e) {
+        listEl.innerHTML = "讀取資料失敗：" + e.message;
+      }
     }
+
+    function renderList() {
+      const kw = document.getElementById('search').value.toLowerCase();
+      const filtered = allOutfits.filter(o => 
+        o.name.toLowerCase().includes(kw) || (o.tags && o.tags.some(t => t.toLowerCase().includes(kw)))
+      );
+      document.getElementById('list').innerHTML = filtered.length ? filtered.map(o => `
+        <div class="card">
+          ${o.images && o.images[0] ? <img src="${o.images[0]}"> : `<div style="height:220px;background:#333;display:flex;align-items:center;justify-content:center;">無圖片</div>`}
+          <div class="card-body">
+            <div style="font-size:12px;color:#aaa;">${o.category || '未分類'} · ${o.twDate || '日期待定'}</div>
+            <h4 style="margin:5px 0;">${o.name}</h4>
+            <div style="color:#f5a623;font-size:14px;">${o.price || ''}</div>
+            <div style="margin-top:6px;">${(o.tags || []).map(t => `<span class="tag">${t}</span>`).join('')}</div>
+          </div>
+        </div>
+      `).join('') : "目前尚無外觀資料";
+    }
+
+    document.getElementById('search').addEventListener('input', renderList);
   </script>
 </body>
 </html>
