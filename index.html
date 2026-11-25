@@ -168,9 +168,17 @@
   </div>
 
   <!-- 詳情多圖檢視 Modal -->
-  <div id="detail-modal" class="modal hidden">
-    <div class="modal-box">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
+  <<div id="detail-modal" class="modal hidden">
+<div class="modal-box">
+<div style="display:flex; justify-content:space-between; align-items:center;">
+<h2 id="d-name" style="margin:0;"></h2>
+<button id="close-detail-btn" type="button">✕</button>
+</div>
+<div id="d-info" style="font-size:13px; color:var(--muted); margin:10px 0; line-height:1.7;"></div>
+<div id="d-tags" style="margin-bottom:10px;"></div>
+<div id="d-media"></div>
+</div>
+</div>
   <script>
     const proto = "ht" + "tps://";
     const host = ["www", "gstatic", "com"].join(".");
