@@ -150,7 +150,7 @@
       );
       document.getElementById('list').innerHTML = filtered.length ? filtered.map(o => `
         <div class="card">
-          ${o.images && o.images[0] ? <img src="${o.images[0]}"> : `<div style="height:220px;background:#333;display:flex;align-items:center;justify-content:center;">無圖片</div>`}
+          ${o.images && o.images.length > 0 ? `<img src="${o.images[0]}">` : `<div style="height:220px;background:#333;display:flex;align-items:center;justify-content:center;">無圖片</div>`}
           <div class="card-body">
             <div style="font-size:12px;color:#aaa;">${o.category || '未分類'} · ${o.twDate || '日期待定'}</div>
             <h4 style="margin:5px 0;">${o.name}</h4>
