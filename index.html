@@ -456,44 +456,46 @@
         });
 
         document.getElementById('status-text').innerText = `共 ${list.length} 筆外觀資料`;
-        document.getElementById('cards-container').innerHTML = list.map(item => {
+                document.getElementById('cards-container').innerHTML = list.map(item => {
           const cover = (item.images && item.images.length > 0) ? item.images[0] : "";
           const mediaHtml = cover
-            ? (isVideo(cover) ? <video src="${cover}" class="card-media open-detail" data-id="${item.id}" muted loop autoplay></video> : `<img src="${cover}" class="card-media open-detail" data-id="${item.id}">`)
-            : `<div class="card-media open-detail" data-id="${item.id}" style="display:flex;align-items:center;justify-content:center;color:#666;">無預覽圖</div>`;
-          const tagsHtml = (item.tags || []).map(t => `<span class="badge">${t}</span>`).join('');
-          return `
-            <div class="card">
-              ${mediaHtml}
-              <div class="card-body">
-                <div>
-                  <div style="font-size:12px; color:var(--muted);">${[item.category, item.subCategory].filter(Boolean).join(' · ') || '未分類'}</div>
-                  <h3 style="margin:4px 0; font-size:16px;">${item.name}</h3>
-                  <div style="color:var(--accent); font-size:13px; font-weight:bold;">${item.price || ''} ${item.source ? (${item.source}) : ''}</div>
-                  <div style="font-size:12px; color:var(--muted); margin-top:6px;">
-                    台服：${item.twDate || '未上線'} ${item.twVer ? [${item.twVer}] : ''}<br>
-                    陸服：${item.cnDate || '未填'} ${item.cnVer ? [${item.cnVer}] : ''}
-                  </div>
-                  <div style="margin-top:6px;">${tagsHtml}</div>
-                </div>
-                <div style="display:flex; gap:6px; margin-top:10px; padding-top:8px; border-top:1px solid var(--border);">
-                  <button type="button" class="edit-item" data-id="${item.id}" style="flex:1; padding:5px;">編輯</button>
-                  <button type="button" class="btn-danger del-item" data-id="${item.id}" style="padding:5px 10px;">刪除</button>
-                </div>
-              </div>
-            </div>`;
+            ? (isVideo(cover) ? '<video src="' + cover + '" class="card-media open-detail" data-id="' + item.id + '" muted loop autoplay></video>' : '<img src="' + cover + '" class="card-media open-detail" data-id="' + item.id + '">')
+            : '<div class="card-media open-detail" data-id="' + item.id + '" style="display:flex;align-items:center;justify-content:center;color:#666;">無預覽圖</div>';
+          const tagsHtml = (item.tags || []).map(t => '<span class="badge">' + t + '</span>').join('');
+          const catText = [item.category, item.subCategory].filter(Boolean).join(' · ') || '未分類';
+          return '<div class="card">' + mediaHtml +
+            '<div class="card-body"><div>' +
+              '<div style="font-size:12px; color:var(--muted);">' + catText + '</div>' +
+              '<h3 style="margin:4px 0; font-size:16px;">' + item.name + '</h3>' +
+              '<div style="color:var(--accent); font-size:13px; font-weight:bold;">' + (item.price || '') + (item.source ? ' (' + item.source + ')' : '') + '</div>' +
+              '<div style="font-size:12px; color:var(--muted); margin-top:6px;">' +
+                '台服：' + (item.twDate || '未上線') + (item.twVer ? ' [' + item.twVer + ']' : '') + '<br>' +
+                '陸服：' + (item.cnDate || '未填') + (item.cnVer ? ' [' + item.cnVer + ']' : '') +
+              '</div>' +
+              '<div style="margin-top:6px;">' + tagsHtml + '</div>' +
+            '</div>' +
+            '<div style="display:flex; gap:6px; margin-top:10px; padding-top:8px; border-top:1px solid var(--border);">' +
+              '<button type="button" class="edit-item" data-id="' + item.id + '" style="flex:1; padding:5px;">編輯</button>' +
+              '<button type="button" class="btn-danger del-item" data-id="' + item.id + '" style="padding:5px 10px;">刪除</button>' +
+            '</div></div></div>';
         }).join('');
       }
 
       function renderCalendar() {
         const sorted = [...allItems].sort((a, b) => (b.twDate || '0000').localeCompare(a.twDate || '0000'));
-        document.getElementById('calendar-container').innerHTML = sorted.length ? sorted.map(item => `
-          <div class="cal-item">
-            <div>
-              <strong style="color:var(--primary); margin-right:8px;">${item.twDate || '日期待定'}</strong>
-              <span class="badge">${item.category || '未分類'}</span>
-              <strong>${item.name}</strong>
-              <span style="color:var(--accent); font-size:13px; margin-left:6px;">${item.price || ''}</span>
+        document.getElementById('calendar-container').innerHTML = sorted.length ? sorted.map(item =>
+          '<div class="cal-item"><div>' +
+            '<strong style="color:var(--primary); margin-right:8px;">' + (item.twDate || '日期待定') + '</strong>' +
+            '<span class="badge">' + (item.category || '未分類') + '</span> ' +
+            '<strong>' + item.name + '</strong>' +
+            '<span style="color:var(--accent); font-size:13px; margin-left:6px;">' + (item.price || '') + '</span>' +
+            '<div style="font-size:12px; color:var(--muted); margin-top:4px;">' +
+              '陸服：' + (item.cnDate || '未填') + (item.cnVer ? ' [' + item.cnVer + ']' : '') + (item.note ? ' ｜備註：' + item.note : '') +
+            '</div></div>' +
+            '<button type="button" class="open-detail" data-id="' + item.id + '">檢視多圖</button>' +
+          '</div>'
+        ).join('') : '<div class="panel">尚無外觀時程資料</div>';
+      }
               <div style="font-size:12px; color:var(--muted); margin-top:4px;">
                 陸服：${item.cnDate || '未填'} ${item.cnVer ? [${item.cnVer}] : ''} ${item.note ? ｜備註：${item.note} : ''}
               </div>
