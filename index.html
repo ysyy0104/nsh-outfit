@@ -24,6 +24,9 @@
     .btn-danger { background: #d9534f; color: #fff; border: none; }
     .header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 16px; }
     .header-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .tabs { display: flex; gap: 8px; margin-bottom: 14px; }
+    .tab-btn { padding: 8px 18px; font-size: 14px; }
+    .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
     .tag-chip { display: inline-block; padding: 4px 10px; border-radius: 15px; border: 1px solid var(--border); background: var(--sub); font-size: 12px; cursor: pointer; margin: 3px; user-select: none; }
     .tag-chip.active { background: var(--primary); color: #fff; border-color: var(--primary); }
     .filter-bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
@@ -35,6 +38,7 @@
     .card-media { width: 100%; height: 240px; object-fit: cover; background: #000; cursor: pointer; }
     .card-body { padding: 14px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
     .badge { display: inline-block; font-size: 11px; padding: 2px 7px; border-radius: 4px; background: var(--sub); border: 1px solid var(--border); margin: 2px 3px 2px 0; }
+    .cal-item { background: var(--card); border: 1px solid var(--border); border-left: 4px solid var(--primary); border-radius: 8px; padding: 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
     .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.82); display: flex; justify-content: center; align-items: center; padding: 16px; z-index: 999; }
     .modal-box { background: var(--card); border: 1px solid var(--border); border-radius: 10px; max-width: 720px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 20px; }
     .modal-box img, .modal-box video { width: 100%; border-radius: 8px; margin-top: 10px; }
@@ -68,35 +72,47 @@
       </div>
     </div>
 
-    <!-- 篩選區塊 -->
-    <div class="panel">
-      <div style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;" id="toggle-tags-panel">
-        <strong style="font-size:14px;">獎池標籤 ▾</strong>
-        <div style="display:flex; gap:6px; align-items:center;" onclick="event.stopPropagation()">
-          <button id="mode-all" class="btn-primary" style="padding:4px 8px; font-size:12px;">全部符合</button>
-          <button id="mode-any" style="padding:4px 8px; font-size:12px;">任一符合</button>
-          <button id="clear-filters" style="padding:4px 8px; font-size:12px;">清除</button>
-        </div>
-      </div>
-      <div id="filter-tags-container" style="margin-top:10px;"></div>
-
-      <div class="filter-bar">
-        <div style="display:flex; gap:8px; flex:1; min-width:240px;">
-          <input type="text" id="search-input" placeholder="搜尋名稱、分類、獲取途徑、版本..." style="margin:0;">
-          <select id="cat-filter" style="width:140px; margin:0;"><option value="">全部大類</option></select>
-        </div>
-        <div style="display:flex; gap:12px; align-items:center;">
-          <label style="margin:0; display:flex; align-items:center; gap:5px; cursor:pointer; color:var(--text);">
-            <input type="checkbox" id="tw-unreleased" style="width:auto; margin:0;"> 只看台服未上線
-          </label>
-          <button id="sort-btn" type="button">由新到舊 ↓</button>
-        </div>
-      </div>
+    <!-- 分頁切換 -->
+    <div class="tabs">
+      <button id="tab-gallery" class="tab-btn active" type="button">外觀圖鑑</button>
+      <button id="tab-calendar" class="tab-btn" type="button">台服外觀日曆</button>
     </div>
 
-    <!-- 外觀清單 -->
-    <div id="status-text" style="margin-bottom:10px; font-size:13px; color:var(--muted);">載入中…</div>
-    <div id="cards-container" class="cards"></div>
+    <!-- 檢視 1：外觀圖鑑 -->
+    <div id="view-gallery">
+      <div class="panel">
+        <div style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;" id="toggle-tags-panel">
+          <strong style="font-size:14px;">獎池標籤 ▾</strong>
+          <div style="display:flex; gap:6px; align-items:center;" onclick="event.stopPropagation()">
+            <button id="mode-all" class="btn-primary" style="padding:4px 8px; font-size:12px;">全部符合</button>
+            <button id="mode-any" style="padding:4px 8px; font-size:12px;">任一符合</button>
+            <button id="clear-filters" style="padding:4px 8px; font-size:12px;">清除</button>
+          </div>
+        </div>
+        <div id="filter-tags-container" style="margin-top:10px;"></div>
+
+        <div class="filter-bar">
+          <div style="display:flex; gap:8px; flex:1; min-width:240px;">
+            <input type="text" id="search-input" placeholder="搜尋名稱、分類、獲取途徑、版本..." style="margin:0;">
+            <select id="cat-filter" style="width:140px; margin:0;"><option value="">全部大類</option></select>
+          </div>
+          <div style="display:flex; gap:12px; align-items:center;">
+            <label style="margin:0; display:flex; align-items:center; gap:5px; cursor:pointer; color:var(--text);">
+              <input type="checkbox" id="tw-unreleased" style="width:auto; margin:0;"> 只看台服未上線
+            </label>
+            <button id="sort-btn" type="button">由新到舊 ↓</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="status-text" style="margin-bottom:10px; font-size:13px; color:var(--muted);">載入中…</div>
+      <div id="cards-container" class="cards"></div>
+    </div>
+
+    <!-- 檢視 2：台服外觀日曆 -->
+    <div id="view-calendar" class="hidden">
+      <div id="calendar-container">載入中…</div>
+    </div>
   </div>
 
   <!-- 新增 / 編輯外觀 Modal -->
@@ -155,15 +171,6 @@
   <div id="detail-modal" class="modal hidden">
     <div class="modal-box">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h2 id="d-name" style="margin:0;"></h2>
-        <button id="close-detail-btn" type="button">✕</button>
-      </div>
-      <div id="d-info" style="font-size:13px; color:var(--muted); margin:10px 0; line-height:1.7;"></div>
-      <div id="d-tags" style="margin-bottom:10px;"></div>
-      <div id="d-media"></div>
-    </div>
-  </div>
-
   <script>
     const proto = "ht" + "tps://";
     const host = ["www", "gstatic", "com"].join(".");
@@ -181,3 +188,371 @@
     }
 
     (async function init() {
+      for (const f of files) await loadScript(f);
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyBTRmc9Kh_8er4_-Z8QMAV5rQghcoK6HYU",
+        authDomain: "nsh-db-1321c." + ["firebaseapp", "com"].join("."),
+        projectId: "nsh-db-1321c",
+        storageBucket: "nsh-db-1321c." + ["firebasestorage", "app"].join("."),
+        messagingSenderId: "887842444277",
+        appId: "1:887842444277:web:8d6372cc3362aa231bc6bc"
+      };
+
+      firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
+      const db = firebase.firestore();
+
+      const DEFAULT_TAGS = ["天賞髮型", "聯動", "賽季", "大獎", "進階", "贈禮", "偏色", "品級", "地點", "限購", "系列", "類別"];
+      let allItems = [];
+      let selectedFilterTags = new Set();
+      let selectedFormTags = new Set();
+      let filterMode = "ALL";
+      let sortDesc = true;
+
+      document.getElementById('theme-btn').addEventListener('click', () => {
+        document.body.classList.toggle('light');
+      });
+
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          document.getElementById('login-view').classList.add('hidden');
+          document.getElementById('app-view').classList.remove('hidden');
+          loadData();
+        } else {
+          document.getElementById('login-view').classList.remove('hidden');
+          document.getElementById('app-view').classList.add('hidden');
+        }
+      });
+
+      document.getElementById('login-btn').addEventListener('click', async () => {
+        const email = document.getElementById('email').value.trim();
+        const pw = document.getElementById('password').value;
+        const msg = document.getElementById('login-msg');
+        msg.innerText = "驗證中...";
+        try {
+          await auth.signInWithEmailAndPassword(email, pw);
+          msg.innerText = "";
+        } catch (e) {
+          msg.innerText = "登入失敗：" + e.message;
+        }
+      });
+
+      document.getElementById('logout-btn').addEventListener('click', () => auth.signOut());
+
+      document.getElementById('tab-gallery').addEventListener('click', () => {
+        document.getElementById('tab-gallery').classList.add('active');
+        document.getElementById('tab-calendar').classList.remove('active');
+        document.getElementById('view-gallery').classList.remove('hidden');
+        document.getElementById('view-calendar').classList.add('hidden');
+      });
+
+      document.getElementById('tab-calendar').addEventListener('click', () => {
+        document.getElementById('tab-calendar').classList.add('active');
+        document.getElementById('tab-gallery').classList.remove('active');
+        document.getElementById('view-calendar').classList.remove('hidden');
+        document.getElementById('view-gallery').classList.add('hidden');
+        renderCalendar();
+      });
+
+      function getAllAvailableTags() {
+        const set = new Set(DEFAULT_TAGS);
+        allItems.forEach(item => (item.tags || []).forEach(t => set.add(t)));
+        return [...set];
+      }
+
+      function renderFilterTags() {
+        const container = document.getElementById('filter-tags-container');
+        container.innerHTML = getAllAvailableTags().map(tag => `
+          <span class="tag-chip ${selectedFilterTags.has(tag) ? 'active' : ''}" data-ftag="${tag}">${tag}</span>
+        `).join('');
+      }
+
+      function renderFormTags() {
+        const container = document.getElementById('form-tags-container');
+        container.innerHTML = getAllAvailableTags().map(tag => `
+          <span class="tag-chip ${selectedFormTags.has(tag) ? 'active' : ''}" data-formtag="${tag}">${tag}</span>
+        `).join('');
+      }
+
+      document.getElementById('filter-tags-container').addEventListener('click', (e) => {
+        const t = e.target.getAttribute('data-ftag');
+        if (!t) return;
+        selectedFilterTags.has(t) ? selectedFilterTags.delete(t) : selectedFilterTags.add(t);
+        renderFilterTags();
+        renderCards();
+      });
+
+      document.getElementById('form-tags-container').addEventListener('click', (e) => {
+        const t = e.target.getAttribute('data-formtag');
+        if (!t) return;
+        selectedFormTags.has(t) ? selectedFormTags.delete(t) : selectedFormTags.add(t);
+        renderFormTags();
+      });
+
+      document.getElementById('add-custom-tag-btn').addEventListener('click', () => {
+        const val = document.getElementById('custom-tag-input').value.trim();
+        if (!val) return;
+        DEFAULT_TAGS.push(val);
+        selectedFormTags.add(val);
+        document.getElementById('custom-tag-input').value = "";
+        renderFormTags();
+        renderFilterTags();
+      });
+
+      document.getElementById('toggle-tags-panel').addEventListener('click', () => {
+        document.getElementById('filter-tags-container').classList.toggle('hidden');
+      });
+
+      document.getElementById('mode-all').addEventListener('click', () => {
+        filterMode = "ALL";
+        document.getElementById('mode-all').classList.add('btn-primary');
+        document.getElementById('mode-any').classList.remove('btn-primary');
+        renderCards();
+      });
+
+      document.getElementById('mode-any').addEventListener('click', () => {
+        filterMode = "ANY";
+        document.getElementById('mode-any').classList.add('btn-primary');
+        document.getElementById('mode-all').classList.remove('btn-primary');
+        renderCards();
+      });
+
+      document.getElementById('clear-filters').addEventListener('click', () => {
+        selectedFilterTags.clear();
+        document.getElementById('search-input').value = "";
+        document.getElementById('cat-filter').value = "";
+        document.getElementById('tw-unreleased').checked = false;
+        renderFilterTags();
+        renderCards();
+      });
+
+      document.getElementById('sort-btn').addEventListener('click', () => {
+        sortDesc = !sortDesc;
+        document.getElementById('sort-btn').innerText = sortDesc ? "由新到舊 ↓" : "由舊到新 ↑";
+        renderCards();
+      });
+
+      ['search-input', 'cat-filter', 'tw-unreleased'].forEach(id => {
+        document.getElementById(id).addEventListener('input', renderCards);
+      });
+
+      function openForm(item = null) {
+        document.getElementById('modal-form-title').innerText = item ? "編輯外觀" : "新增外觀";
+        document.getElementById('f-id').value = item ? item.id : "";
+        document.getElementById('f-cat').value = item ? (item.category || "") : "";
+        document.getElementById('f-subcat').value = item ? (item.subCategory || "") : "";
+        document.getElementById('f-name').value = item ? (item.name || "") : "";
+        document.getElementById('f-price').value = item ? (item.price || "") : "";
+        document.getElementById('f-source').value = item ? (item.source || "") : "";
+        document.getElementById('f-cn-date').value = item ? (item.cnDate || "") : "";
+        document.getElementById('f-cn-ver').value = item ? (item.cnVer || "") : "";
+        document.getElementById('f-tw-date').value = item ? (item.twDate || "") : "";
+        document.getElementById('f-tw-ver').value = item ? (item.twVer || "") : "";
+        document.getElementById('f-link').value = item ? (item.link || "") : "";
+        document.getElementById('f-note').value = item ? (item.note || "") : "";
+        document.getElementById('f-media').value = item ? ((item.images || []).join('\n')) : "";
+        selectedFormTags = new Set(item ? (item.tags || []) : []);
+        renderFormTags();
+        document.getElementById('form-modal').classList.remove('hidden');
+      }
+
+      document.getElementById('open-add-btn').addEventListener('click', () => openForm());
+      document.getElementById('close-form-x').addEventListener('click', () => document.getElementById('form-modal').classList.add('hidden'));
+      document.getElementById('cancel-form-btn').addEventListener('click', () => document.getElementById('form-modal').classList.add('hidden'));
+
+      document.getElementById('save-form-btn').addEventListener('click', async () => {
+        const name = document.getElementById('f-name').value.trim();
+        if (!name) return alert("請輸入外觀名稱！");
+        const btn = document.getElementById('save-form-btn');
+        btn.disabled = true; btn.innerText = "儲存中...";
+        try {
+          const id = document.getElementById('f-id').value;
+          const payload = {
+            category: document.getElementById('f-cat').value.trim(),
+            subCategory: document.getElementById('f-subcat').value.trim(),
+            name: name,
+            price: document.getElementById('f-price').value.trim(),
+            source: document.getElementById('f-source').value.trim(),
+            tags: [...selectedFormTags],
+            cnDate: document.getElementById('f-cn-date').value,
+            cnVer: document.getElementById('f-cn-ver').value.trim(),
+            twDate: document.getElementById('f-tw-date').value,
+            twVer: document.getElementById('f-tw-ver').value.trim(),
+            link: document.getElementById('f-link').value.trim(),
+            note: document.getElementById('f-note').value.trim(),
+            images: document.getElementById('f-media').value.split('\n').map(u => u.trim()).filter(Boolean)
+          };
+          if (id) {
+            await db.collection("outfits").doc(id).update(payload);
+          } else {
+            payload.createdAt = Date.now();
+            await db.collection("outfits").add(payload);
+          }
+          document.getElementById('form-modal').classList.add('hidden');
+          loadData();
+        } catch (e) {
+          alert("儲存失敗：" + e.message);
+        } finally {
+          btn.disabled = false; btn.innerText = "儲存";
+        }
+      });
+
+      async function loadData() {
+        document.getElementById('status-text').innerText = "載入中…";
+        try {
+          const snap = await db.collection("outfits").get();
+          allItems = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+          const cats = [...new Set(allItems.map(i => i.category).filter(Boolean))];
+          document.getElementById('cat-filter').innerHTML = '<option value="">全部大類</option>' + cats.map(c => `<option value="${c}">${c}</option>`).join('');
+          renderFilterTags();
+          renderCards();
+          renderCalendar();
+        } catch (e) {
+          document.getElementById('status-text').innerText = "讀取失敗：" + e.message;
+        }
+      }
+
+      function isVideo(url) { return /\.(mp4|webm|ogg)(\?.*)?$/i.test(url); }
+
+      function renderCards() {
+        const kw = document.getElementById('search-input').value.toLowerCase();
+        const cat = document.getElementById('cat-filter').value;
+        const onlyTwUnreleased = document.getElementById('tw-unreleased').checked;
+        const today = new Date().toISOString().slice(0, 10);
+
+        let list = allItems.filter(item => {
+          if (cat && item.category !== cat) return false;
+          if (onlyTwUnreleased && item.twDate && item.twDate <= today) return false;
+          if (selectedFilterTags.size > 0) {
+            const itemTags = new Set(item.tags || []);
+            if (filterMode === "ALL") {
+              for (let t of selectedFilterTags) if (!itemTags.has(t)) return false;
+            } else {
+              let hit = false;
+              for (let t of selectedFilterTags) if (itemTags.has(t)) hit = true;
+              if (!hit) return false;
+            }
+          }
+          if (kw) {
+            const hay = [item.name, item.category, item.subCategory, item.source, item.cnVer, item.twVer, item.note, ...(item.tags || [])].join(" ").toLowerCase();
+            if (!hay.includes(kw)) return false;
+          }
+          return true;
+        });
+
+        list.sort((a, b) => {
+          const ta = a.twDate || a.cnDate || String(a.createdAt || 0);
+          const tb = b.twDate || b.cnDate || String(b.createdAt || 0);
+          return sortDesc ? tb.localeCompare(ta) : ta.localeCompare(tb);
+        });
+
+        document.getElementById('status-text').innerText = `共 ${list.length} 筆外觀資料`;
+        document.getElementById('cards-container').innerHTML = list.map(item => {
+          const cover = (item.images && item.images.length > 0) ? item.images[0] : "";
+          const mediaHtml = cover
+            ? (isVideo(cover) ? <video src="${cover}" class="card-media open-detail" data-id="${item.id}" muted loop autoplay></video> : `<img src="${cover}" class="card-media open-detail" data-id="${item.id}">`)
+            : `<div class="card-media open-detail" data-id="${item.id}" style="display:flex;align-items:center;justify-content:center;color:#666;">無預覽圖</div>`;
+          const tagsHtml = (item.tags || []).map(t => `<span class="badge">${t}</span>`).join('');
+          return `
+            <div class="card">
+              ${mediaHtml}
+              <div class="card-body">
+                <div>
+                  <div style="font-size:12px; color:var(--muted);">${[item.category, item.subCategory].filter(Boolean).join(' · ') || '未分類'}</div>
+                  <h3 style="margin:4px 0; font-size:16px;">${item.name}</h3>
+                  <div style="color:var(--accent); font-size:13px; font-weight:bold;">${item.price || ''} ${item.source ? (${item.source}) : ''}</div>
+                  <div style="font-size:12px; color:var(--muted); margin-top:6px;">
+                    台服：${item.twDate || '未上線'} ${item.twVer ? [${item.twVer}] : ''}<br>
+                    陸服：${item.cnDate || '未填'} ${item.cnVer ? [${item.cnVer}] : ''}
+                  </div>
+                  <div style="margin-top:6px;">${tagsHtml}</div>
+                </div>
+                <div style="display:flex; gap:6px; margin-top:10px; padding-top:8px; border-top:1px solid var(--border);">
+                  <button type="button" class="edit-item" data-id="${item.id}" style="flex:1; padding:5px;">編輯</button>
+                  <button type="button" class="btn-danger del-item" data-id="${item.id}" style="padding:5px 10px;">刪除</button>
+                </div>
+              </div>
+            </div>`;
+        }).join('');
+      }
+
+      function renderCalendar() {
+        const sorted = [...allItems].sort((a, b) => (b.twDate || '0000').localeCompare(a.twDate || '0000'));
+        document.getElementById('calendar-container').innerHTML = sorted.length ? sorted.map(item => `
+          <div class="cal-item">
+            <div>
+              <strong style="color:var(--primary); margin-right:8px;">${item.twDate || '日期待定'}</strong>
+              <span class="badge">${item.category || '未分類'}</span>
+              <strong>${item.name}</strong>
+              <span style="color:var(--accent); font-size:13px; margin-left:6px;">${item.price || ''}</span>
+              <div style="font-size:12px; color:var(--muted); margin-top:4px;">
+                陸服：${item.cnDate || '未填'} ${item.cnVer ? [${item.cnVer}] : ''} ${item.note ? ｜備註：${item.note} : ''}
+              </div>
+            </div>
+            <button type="button" class="open-detail" data-id="${item.id}">檢視多圖</button>
+          </div>
+        `).join('') : `<div class="panel">尚無外觀時程資料</div>`;
+      }
+
+      document.getElementById('app-view').addEventListener('click', async (e) => {
+        const id = e.target.getAttribute('data-id');
+        if (!id) return;
+        const item = allItems.find(i => i.id === id);
+        if (!item) return;
+
+        if (e.target.classList.contains('open-detail')) {
+          document.getElementById('d-name').innerText = item.name;
+          document.getElementById('d-info').innerHTML = `
+            分類：${[item.category, item.subCategory].filter(Boolean).join(' / ') || '無'}<br>
+            售價與途徑：${item.price || '無'} ｜ ${item.source || '無'}<br>
+            台服上線：${item.twDate || '未上線'} ${item.twVer ? (${item.twVer}) : ''}<br>
+            陸服上線：${item.cnDate || '未填'} ${item.cnVer ? (${item.cnVer}) : ''}<br>
+            ${item.link ? 公告連結：<a href="${item.link}" target="_blank" style="color:var(--primary);">點此開啟</a><br> : ''}
+            ${item.note ? 備註：${item.note} : ''}
+          `;
+          document.getElementById('d-tags').innerHTML = (item.tags || []).map(t => `<span class="badge">${t}</span>`).join('');
+          document.getElementById('d-media').innerHTML = (item.images || []).map(u => isVideo(u) ? <video src="${u}" controls></video> : `<img src="${u}">`).join('');
+          document.getElementById('detail-modal').classList.remove('hidden');
+        }
+        if (e.target.classList.contains('edit-item')) openForm(item);
+        if (e.target.classList.contains('del-item')) {
+          if (confirm(`確定刪除「${item.name}」？`)) {
+            await db.collection("outfits").doc(id).delete();
+            loadData();
+          }
+        }
+      });
+
+      document.getElementById('close-detail-btn').addEventListener('click', () => document.getElementById('detail-modal').classList.add('hidden'));
+
+      document.getElementById('export-btn').addEventListener('click', () => {
+        const blob = new Blob([JSON.stringify(allItems, null, 2)], { type: "application/json" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = `nsh-outfits-backup-${new Date().toISOString().slice(0,10)}.json`;
+        a.click();
+      });
+
+      document.getElementById('import-btn').addEventListener('click', () => document.getElementById('import-file').click());
+      document.getElementById('import-file').addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        try {
+          const arr = JSON.parse(await file.text());
+          if (!Array.isArray(arr)) throw new Error("JSON 格式必須為陣列");
+          for (const obj of arr) {
+            const { id, ...clean } = obj;
+            clean.createdAt = clean.createdAt || Date.now();
+            await db.collection("outfits").add(clean);
+          }
+          alert(`成功匯入 ${arr.length} 筆資料至雲端！`);
+          loadData();
+        } catch (err) {
+          alert("匯入失敗：" + err.message);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
