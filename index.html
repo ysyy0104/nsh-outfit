@@ -481,87 +481,139 @@
         }).join('');
       }
 
-      function renderCalendar() {
-        const sorted = [...allItems].sort((a, b) => (b.twDate || '0000').localeCompare(a.twDate || '0000'));
-        document.getElementById('calendar-container').innerHTML = sorted.length ? sorted.map(item =>
-          '<div class="cal-item"><div>' +
-            '<strong style="color:var(--primary); margin-right:8px;">' + (item.twDate || '日期待定') + '</strong>' +
-            '<span class="badge">' + (item.category || '未分類') + '</span> ' +
-            '<strong>' + item.name + '</strong>' +
-            '<span style="color:var(--accent); font-size:13px; margin-left:6px;">' + (item.price || '') + '</span>' +
-            '<div style="font-size:12px; color:var(--muted); margin-top:4px;">' +
-              '陸服：' + (item.cnDate || '未填') + (item.cnVer ? ' [' + item.cnVer + ']' : '') + (item.note ? ' ｜備註：' + item.note : '') +
-            '</div></div>' +
-            '<button type="button" class="open-detail" data-id="' + item.id + '">檢視多圖</button>' +
-          '</div>'
-        ).join('') : '<div class="panel">尚無外觀時程資料</div>';
-      }
-              <div style="font-size:12px; color:var(--muted); margin-top:4px;">
-                陸服：${item.cnDate || '未填'} ${item.cnVer ? [${item.cnVer}] : ''} ${item.note ? ｜備註：${item.note} : ''}
-              </div>
-            </div>
-            <button type="button" class="open-detail" data-id="${item.id}">檢視多圖</button>
-          </div>
-        `).join('') : `<div class="panel">尚無外觀時程資料</div>`;
-      }
+              function renderCards() {
+          const kw = document.getElementById('search-input').value.toLowerCase();
+          const cat = document.getElementById('cat-filter').value;
+          const onlyTwUnreleased = document.getElementById('tw-unreleased').checked;
+          const today = new Date().toISOString().slice(0, 10);
 
-      document.getElementById('app-view').addEventListener('click', async (e) => {
-        const id = e.target.getAttribute('data-id');
-        if (!id) return;
-        const item = allItems.find(i => i.id === id);
-        if (!item) return;
+          let list = allItems.filter(item => {
+            if (cat && item.category !== cat) return false;
+            if (onlyTwUnreleased && item.twDate && item.twDate <= today) return false;
+            if (selectedFilterTags.size > 0) {
+              const itemTags = new Set(item.tags || []);
+              if (filterMode === "ALL") {
+                for (let t of selectedFilterTags) if (!itemTags.has(t)) return false;
+              } else {
+                let hit = false;
+                for (let t of selectedFilterTags) if (itemTags.has(t)) hit = true;
+                if (!hit) return false;
+              }
+            }
+            if (kw) {
+              const hay = [item.name, item.category, item.subCategory, item.source, item.cnVer, item.twVer, item.note, ...(item.tags || [])].join(" ").toLowerCase();
+              if (!hay.includes(kw)) return false;
+            }
+            return true;
+          });
 
-        if (e.target.classList.contains('open-detail')) {
-          document.getElementById('d-name').innerText = item.name;
-          document.getElementById('d-info').innerHTML = `
-            分類：${[item.category, item.subCategory].filter(Boolean).join(' / ') || '無'}<br>
-            售價與途徑：${item.price || '無'} ｜ ${item.source || '無'}<br>
-            台服上線：${item.twDate || '未上線'} ${item.twVer ? (${item.twVer}) : ''}<br>
-            陸服上線：${item.cnDate || '未填'} ${item.cnVer ? (${item.cnVer}) : ''}<br>
-            ${item.link ? 公告連結：<a href="${item.link}" target="_blank" style="color:var(--primary);">點此開啟</a><br> : ''}
-            ${item.note ? 備註：${item.note} : ''}
-          `;
-          document.getElementById('d-tags').innerHTML = (item.tags || []).map(t => `<span class="badge">${t}</span>`).join('');
-          document.getElementById('d-media').innerHTML = (item.images || []).map(u => isVideo(u) ? <video src="${u}" controls></video> : `<img src="${u}">`).join('');
-          document.getElementById('detail-modal').classList.remove('hidden');
+          list.sort((a, b) => {
+            const ta = a.twDate || a.cnDate || String(a.createdAt || 0);
+            const tb = b.twDate || b.cnDate || String(b.createdAt || 0);
+            return sortDesc ? tb.localeCompare(ta) : ta.localeCompare(tb);
+          });
+
+          document.getElementById('status-text').innerText = '共 ' + list.length + ' 筆外觀資料';
+          document.getElementById('cards-container').innerHTML = list.map(item => {
+            const cover = (item.images && item.images.length > 0) ? item.images[0] : "";
+            const mediaHtml = cover
+              ? (isVideo(cover) ? '<video src="' + cover + '" class="card-media open-detail" data-id="' + item.id + '" muted loop autoplay></video>' : '<img src="' + cover + '" class="card-media open-detail" data-id="' + item.id + '">')
+              : '<div class="card-media open-detail" data-id="' + item.id + '" style="display:flex;align-items:center;justify-content:center;color:#666;">無預覽圖</div>';
+            const tagsHtml = (item.tags || []).map(t => '<span class="badge">' + t + '</span>').join('');
+            const catText = [item.category, item.subCategory].filter(Boolean).join(' · ') || '未分類';
+            return '<div class="card">' + mediaHtml +
+              '<div class="card-body"><div>' +
+                '<div style="font-size:12px; color:var(--muted);">' + catText + '</div>' +
+                '<h3 style="margin:4px 0; font-size:16px;">' + item.name + '</h3>' +
+                '<div style="color:var(--accent); font-size:13px; font-weight:bold;">' + (item.price || '') + (item.source ? ' (' + item.source + ')' : '') + '</div>' +
+                '<div style="font-size:12px; color:var(--muted); margin-top:6px;">' +
+                  '台服：' + (item.twDate || '未上線') + (item.twVer ? ' [' + item.twVer + ']' : '') + '<br>' +
+                  '陸服：' + (item.cnDate || '未填') + (item.cnVer ? ' [' + item.cnVer + ']' : '') +
+                '</div>' +
+                '<div style="margin-top:6px;">' + tagsHtml + '</div>' +
+              '</div>' +
+              '<div style="display:flex; gap:6px; margin-top:10px; padding-top:8px; border-top:1px solid var(--border);">' +
+                '<button type="button" class="edit-item" data-id="' + item.id + '" style="flex:1; padding:5px;">編輯</button>' +
+                '<button type="button" class="btn-danger del-item" data-id="' + item.id + '" style="padding:5px 10px;">刪除</button>' +
+              '</div></div></div>';
+          }).join('');
         }
-        if (e.target.classList.contains('edit-item')) openForm(item);
-        if (e.target.classList.contains('del-item')) {
-          if (confirm(`確定刪除「${item.name}」？`)) {
-            await db.collection("outfits").doc(id).delete();
+
+        function renderCalendar() {
+          const sorted = [...allItems].sort((a, b) => (b.twDate || '0000').localeCompare(a.twDate || '0000'));
+          document.getElementById('calendar-container').innerHTML = sorted.length ? sorted.map(item =>
+            '<div class="cal-item"><div>' +
+              '<strong style="color:var(--primary); margin-right:8px;">' + (item.twDate || '日期待定') + '</strong>' +
+              '<span class="badge">' + (item.category || '未分類') + '</span> ' +
+              '<strong>' + item.name + '</strong>' +
+              '<span style="color:var(--accent); font-size:13px; margin-left:6px;">' + (item.price || '') + '</span>' +
+              '<div style="font-size:12px; color:var(--muted); margin-top:4px;">' +
+                '陸服：' + (item.cnDate || '未填') + (item.cnVer ? ' [' + item.cnVer + ']' : '') + (item.note ? ' ｜備註：' + item.note : '') +
+              '</div></div>' +
+              '<button type="button" class="open-detail" data-id="' + item.id + '">檢視多圖</button>' +
+            '</div>'
+          ).join('') : '<div class="panel">尚無外觀時程資料</div>';
+        }
+
+        document.getElementById('app-view').addEventListener('click', async (e) => {
+          const id = e.target.getAttribute('data-id');
+          if (!id) return;
+          const item = allItems.find(i => i.id === id);
+          if (!item) return;
+
+          if (e.target.classList.contains('open-detail')) {
+            document.getElementById('d-name').innerText = item.name;
+            document.getElementById('d-info').innerHTML =
+              '分類：' + ([item.category, item.subCategory].filter(Boolean).join(' / ') || '無') + '<br>' +
+              '售價與途徑：' + (item.price || '無') + ' ｜ ' + (item.source || '無') + '<br>' +
+              '台服上線：' + (item.twDate || '未上線') + (item.twVer ? ' (' + item.twVer + ')' : '') + '<br>' +
+              '陸服上線：' + (item.cnDate || '未填') + (item.cnVer ? ' (' + item.cnVer + ')' : '') + '<br>' +
+              (item.link ? '公告連結：<a href="' + item.link + '" target="_blank" style="color:var(--primary);">點此開啟</a><br>' : '') +
+              (item.note ? '備註：' + item.note : '');
+            document.getElementById('d-tags').innerHTML = (item.tags || []).map(t => '<span class="badge">' + t + '</span>').join('');
+            document.getElementById('d-media').innerHTML = (item.images || []).map(u => isVideo(u) ? '<video src="' + u + '" controls></video>' : '<img src="' + u + '">').join('');
+            document.getElementById('detail-modal').classList.remove('hidden');
+          }
+          if (e.target.classList.contains('edit-item')) openForm(item);
+          if (e.target.classList.contains('del-item')) {
+            if (confirm('確定刪除「' + item.name + '」？')) {
+              await db.collection("outfits").doc(id).delete();
+              loadData();
+            }
+          }
+        });
+
+        document.getElementById('close-detail-btn').addEventListener('click', () => document.getElementById('detail-modal').classList.add('hidden'));
+
+        document.getElementById('export-btn').addEventListener('click', () => {
+          const blob = new Blob([JSON.stringify(allItems, null, 2)], { type: "application/json" });
+          const a = document.createElement("a");
+          a.href = URL.createObjectURL(blob);
+          a.download = 'nsh-outfits-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+          a.click();
+        });
+
+        document.getElementById('import-btn').addEventListener('click', () => document.getElementById('import-file').click());
+        document.getElementById('import-file').addEventListener('change', async (e) => {
+          const file = e.target.files[0];
+          if (!file) return;
+          try {
+            const arr = JSON.parse(await file.text());
+            if (!Array.isArray(arr)) throw new Error("JSON 格式必須為陣列");
+            for (const obj of arr) {
+              const { id, ...clean } = obj;
+              clean.createdAt = clean.createdAt || Date.now();
+              await db.collection("outfits").add(clean);
+            }
+            alert('成功匯入 ' + arr.length + ' 筆資料至雲端！');
             loadData();
+          } catch (err) {
+            alert("匯入失敗：" + err.message);
           }
-        }
-      });
-
-      document.getElementById('close-detail-btn').addEventListener('click', () => document.getElementById('detail-modal').classList.add('hidden'));
-
-      document.getElementById('export-btn').addEventListener('click', () => {
-        const blob = new Blob([JSON.stringify(allItems, null, 2)], { type: "application/json" });
-        const a = document.createElement("a");
-        a.href = URL.createObjectURL(blob);
-        a.download = `nsh-outfits-backup-${new Date().toISOString().slice(0,10)}.json`;
-        a.click();
-      });
-
-      document.getElementById('import-btn').addEventListener('click', () => document.getElementById('import-file').click());
-      document.getElementById('import-file').addEventListener('change', async (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-        try {
-          const arr = JSON.parse(await file.text());
-          if (!Array.isArray(arr)) throw new Error("JSON 格式必須為陣列");
-          for (const obj of arr) {
-            const { id, ...clean } = obj;
-            clean.createdAt = clean.createdAt || Date.now();
-            await db.collection("outfits").add(clean);
-          }
-          alert(`成功匯入 ${arr.length} 筆資料至雲端！`);
-          loadData();
-        } catch (err) {
-          alert("匯入失敗：" + err.message);
-        }
-      });
+        });
+      } catch (err) {
+        document.getElementById('login-msg').innerText = "程式初始化錯誤：" + err.message;
+      }
     })();
   </script>
 </body>
