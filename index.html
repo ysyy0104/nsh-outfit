@@ -555,7 +555,7 @@
           ).join('') : '<div class="panel">尚無外觀時程資料</div>';
         }
 
-        document.getElementById('app-view').addEventListener('click', async (e) => {
+                document.getElementById('app-view').addEventListener('click', async (e) => {
           const id = e.target.getAttribute('data-id');
           if (!id) return;
           const item = allItems.find(i => i.id === id);
