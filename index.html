@@ -5,112 +5,41 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>逆水寒手游外觀資料庫｜台服・陸服</title>
 <style>
-:root {
-  --bg: #121212; --card: #1e1e1e; --sub: #262626; --border: #383838;
-  --text: #eee; --muted: #999; --primary: #4a90e2; --accent: #f5a623;
-}
-body.light {
-  --bg: #f4f5f7; --card: #fff; --sub: #f0f2f5; --border: #dcdcdc;
-  --text: #222; --muted: #666; --primary: #2b7de9; --accent: #d98200;
-}
-body {
-  font-family: "Microsoft JhengHei", sans-serif;
-  background: var(--bg); color: var(--text);
-  margin: 0; padding: 16px; transition: .2s;
-}
+:root { --bg: #121212; --card: #1e1e1e; --sub: #262626; --border: #383838; --text: #eee; --muted: #999; --primary: #4a90e2; --accent: #f5a623; }
+body.light { --bg: #f4f5f7; --card: #fff; --sub: #f0f2f5; --border: #dcdcdc; --text: #222; --muted: #666; --primary: #2b7de9; --accent: #d98200; }
+body { font-family: "Microsoft JhengHei", sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 16px; transition: .2s; }
 .hidden { display: none !important; }
 .container { max-width: 1180px; margin: auto; }
-.panel {
-  background: var(--card); border: 1px solid var(--border);
-  border-radius: 10px; padding: 16px; margin-bottom: 14px;
-}
-input, textarea, select {
-  padding: 8px 10px; border-radius: 6px;
-  border: 1px solid var(--border); background: var(--sub);
-  color: var(--text); width: 100%; box-sizing: border-box;
-  font-size: 13px; margin-top: 4px;
-}
-button {
-  padding: 7px 12px; border-radius: 6px;
-  border: 1px solid var(--border); background: var(--sub);
-  color: var(--text); cursor: pointer; font-size: 13px; font-weight: bold;
-}
+.panel { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 14px; }
+input, textarea, select { padding: 8px 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--sub); color: var(--text); width: 100%; box-sizing: border-box; font-size: 13px; margin-top: 4px; }
+button { padding: 7px 12px; border-radius: 6px; border: 1px solid var(--border); background: var(--sub); color: var(--text); cursor: pointer; font-size: 13px; font-weight: bold; }
 button:hover { opacity: .85; }
 .btn-primary { background: var(--primary); color: #fff; border: none; }
 .btn-danger { background: #d9534f; color: #fff; border: none; }
-.header, .header-actions, .main-tabs {
-  display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
-}
+.header, .header-actions, .main-tabs { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .header { justify-content: space-between; margin-bottom: 12px; }
 .main-tabs { margin-bottom: 12px; }
 .main-tab { padding: 8px 14px; font-size: 14px; border-radius: 8px; }
-.main-tab.active {
-  background: var(--primary); color: #fff; border-color: var(--primary);
-}
-.tag-chip {
-  display: inline-block; padding: 4px 10px; border-radius: 15px;
-  border: 1px solid var(--border); background: var(--sub);
-  font-size: 12px; cursor: pointer; margin: 3px; user-select: none;
-}
-.tag-chip.active {
-  background: var(--primary); color: #fff; border-color: var(--primary);
-}
-.filter-bar {
-  display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
-  justify-content: space-between; margin-top: 10px;
-  padding-top: 10px; border-top: 1px solid var(--border);
-}
+.main-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.tag-chip { display: inline-block; padding: 4px 10px; border-radius: 15px; border: 1px solid var(--border); background: var(--sub); font-size: 12px; cursor: pointer; margin: 3px; user-select: none; }
+.tag-chip.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.filter-bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 @media (max-width: 650px) { .grid-2 { grid-template-columns: 1fr; } }
 label { font-size: 12px; color: var(--muted); display: block; margin-top: 8px; }
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 14px;
-}
-.card {
-  background: var(--card); border: 1px solid var(--border);
-  border-radius: 10px; overflow: hidden;
-  display: flex; flex-direction: column;
-}
-.card-media {
-  width: 100%; height: 230px; object-fit: cover;
-  background: #000; cursor: pointer;
-}
-.card-body {
-  padding: 12px; flex: 1;
-  display: flex; flex-direction: column; justify-content: space-between;
-}
-.align-box {
-  background: var(--sub); border: 1px solid var(--border);
-  border-radius: 6px; padding: 8px; margin-top: 8px; font-size: 12px;
-  display: grid; grid-template-columns: 1fr 92px 68px;
-  gap: 4px 6px; align-items: center;
-}
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; }
+.card-media { width: 100%; height: 230px; object-fit: cover; background: #000; cursor: pointer; }
+.card-body { padding: 12px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+.align-box { background: var(--sub); border: 1px solid var(--border); border-radius: 6px; padding: 8px; margin-top: 8px; font-size: 12px; display: grid; grid-template-columns: 1fr 92px 68px; gap: 4px 6px; align-items: center; }
 .align-box.two-col { grid-template-columns: 1fr 1fr; }
-.align-cell {
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
+.align-cell { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .align-accent { color: var(--accent); font-weight: bold; }
 .align-muted { color: var(--muted); }
-.badge {
-  display: inline-block; font-size: 11px; padding: 2px 6px;
-  border-radius: 4px; background: var(--sub);
-  border: 1px solid var(--border); margin: 2px 3px 2px 0;
-}
-.modal {
-  position: fixed; inset: 0; background: rgba(0,0,0,.82);
-  display: flex; justify-content: center; align-items: center;
-  padding: 16px; z-index: 999;
-}
-.modal-box {
-  background: var(--card); border: 1px solid var(--border);
-  border-radius: 10px; max-width: 720px; width: 100%;
-  max-height: 90vh; overflow-y: auto; padding: 20px;
-}
-.modal-box img, .modal-box video {
-  width: 100%; border-radius: 8px; margin-top: 10px;
-}
+.badge { display: inline-block; font-size: 11px; padding: 2px 6px; border-radius: 4px; background: var(--sub); border: 1px solid var(--border); margin: 2px 3px 2px 0; }
+.modal { position: fixed; inset: 0; background: rgba(0,0,0,.82); display: flex; justify-content: center; align-items: center; padding: 16px; z-index: 999; }
+.modal-box { background: var(--card); border: 1px solid var(--border); border-radius: 10px; max-width: 720px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 20px; }
+.modal-box img, .modal-box video { width: 100%; border-radius: 8px; margin-top: 10px; }
 </style>
 </head>
 <body>
@@ -234,37 +163,35 @@ label { font-size: 12px; color: var(--muted); display: block; margin-top: 8px; }
 </div>
 
 <script>
-(async function() {
-  const proto = "ht" + "tps://";
-  const host = ["www", "gstatic", "com"].join(".");
-  const path = "/firebasejs/10.8.0/";
-  const files = ["firebase-app-compat.js", "firebase-auth-compat.js", "firebase-firestore-compat.js"];
+(async function init() {
+  try {
+    const base = "moc.citatsg.www//:sptth".split("").reverse().join("");
+    const path = "/firebasejs/10.8.0/";
+    const files = ["firebase-app-compat.js", "firebase-auth-compat.js", "firebase-firestore-compat.js"];
 
-  for (let idx = 0; idx < files.length; idx++) {
-    await new Promise((resolve, reject) => {
-      const s = document.createElement("script");
-      s.src = proto + host + path + files[idx];
-      s.onload = resolve;
-      s.onerror = reject;
-      document.head.appendChild(s);
-    });
-  }
+    for (const file of files) {
+      await new Promise((resolve, reject) => {
+        const s = document.createElement("script");
+        s.src = base + path + file;
+        s.onload = resolve;
+        s.onerror = () => reject(new Error("載入失敗：" + file));
+        document.head.appendChild(s);
+      });
+    }
 
-  firebase.initializeApp({
-    apiKey: "AIzaSyBTRmc9Kh_8er4_-Z8QMAV5rQghcoK6HYU",
-    authDomain: "nsh-db-1321c." + ["firebaseapp", "com"].join("."),
-    projectId: "nsh-db-1321c",
-    storageBucket: "nsh-db-1321c." + ["firebasestorage", "app"].join("."),
-    messagingSenderId: "887842444277",
-    appId: "1:887842444277:web:8d6372cc3362aa231bc6bc"
-  });
-
+    firebase.initializeApp({
+      apiKey: "AIzaSyBTRmc9Kh_8er4_-Z8QMAV5rQghcoK6HYU",
+      authDomain: "nsh-db-1321c.firebase" + "app.com",
+      projectId: "nsh-db-1321c",
+      storageBucket: "nsh-db-1321c.firebase" + "storage.app",
+      messagingSenderId: "887842444277",
+appId: "1:887842444277:web:8d6372cc3362aa231bc6bc"
+});
 const auth = firebase.auth();
 const db = firebase.firestore();
-const $ = function(id) { return document.getElementById(id); };
-
+const $ = id => document.getElementById(id);
 const SCHEMA = {
-  "時裝": {
+"時裝": {
 subs: ["時裝", "戰令時裝", "綁玉時裝", "免費時裝"],
 rules: {
 "時裝": { row1: ["price", "cnDate", "cnVer"], row2: ["tianShang", "twDate", "twVer"] },
@@ -368,16 +295,12 @@ const cat = SCHEMA[m] || SCHEMA["時裝"];
 return cat.rules[s] || cat.rules["_default"] || { row1: ["price", "cnDate", "cnVer"], row2: ["", "twDate", "twVer"] };
 }
 const mainKeys = Object.keys(SCHEMA);
-$('main-tabs-bar').innerHTML = mainKeys.map(function(k) {
-return '' + k + '';
-}).join('');
-$('f-main-cat').innerHTML = mainKeys.map(function(k) {
-return '' + k + '';
-}).join('');
-$('theme-btn').onclick = function() {
-document.body.classList.toggle('light');
-};
-auth.onAuthStateChanged(function(u) {
+$('main-tabs-bar').innerHTML = mainKeys.map(k =>
+'' + k + ''
+).join('');
+$('f-main-cat').innerHTML = mainKeys.map(k => '' + k + '').join('');
+$('theme-btn').onclick = () => document.body.classList.toggle('light');
+auth.onAuthStateChanged(u => {
 if (u) {
 $('login-view').classList.add('hidden');
 $('app-view').classList.remove('hidden');
@@ -388,7 +311,7 @@ $('login-view').classList.remove('hidden');
 $('app-view').classList.add('hidden');
 }
 });
-$('login-btn').onclick = async function() {
+$('login-btn').onclick = async () => {
 $('login-msg').innerText = "驗證中...";
 try {
 await auth.signInWithEmailAndPassword($('email').value.trim(), $('password').value);
@@ -397,20 +320,18 @@ $('login-msg').innerText = "";
 $('login-msg').innerText = "登入失敗：" + e.message;
 }
 };
-$('logout-btn').onclick = function() { auth.signOut(); };
+$('logout-btn').onclick = () => auth.signOut();
 function switchMainTab(t) {
 currentMainTab = t;
 selectedFilterTags.clear();
 $('search-input').value = "";
 $('tw-unreleased').checked = false;
-document.querySelectorAll('.main-tab').forEach(function(b) {
-b.classList.toggle('active', b.getAttribute('data-tab') === t);
-});
+document.querySelectorAll('.main-tab').forEach(b => b.classList.toggle('active', b.getAttribute('data-tab') === t));
 const subs = SCHEMA[t].subs;
 if (subs.length > 0) {
 $('subcat-filter').classList.remove('hidden');
 $('subcat-filter').innerHTML = '全部' + t + '分類' +
-subs.map(function(s) { return '' + s + ''; }).join('');
+subs.map(s => '' + s + '').join('');
 } else {
 $('subcat-filter').classList.add('hidden');
 $('subcat-filter').innerHTML = '';
@@ -418,23 +339,23 @@ $('subcat-filter').innerHTML = '';
 updateDynamicTagFilter();
 renderCards();
 }
-$('main-tabs-bar').onclick = function(e) {
+$('main-tabs-bar').onclick = e => {
 const t = e.target.getAttribute('data-tab');
 if (t) switchMainTab(t);
 };
-$('subcat-filter').onchange = function() {
+$('subcat-filter').onchange = () => {
 selectedFilterTags.clear();
 updateDynamicTagFilter();
 renderCards();
 };
 $('search-input').oninput = renderCards;
 $('tw-unreleased').onchange = renderCards;
-$('sort-btn').onclick = function() {
+$('sort-btn').onclick = () => {
 sortDesc = !sortDesc;
 $('sort-btn').innerText = sortDesc ? "由新到舊 ↓" : "由舊到新 ↑";
 renderCards();
 };
-$('clear-tags-btn').onclick = function() {
+$('clear-tags-btn').onclick = () => {
 selectedFilterTags.clear();
 updateDynamicTagFilter();
 renderCards();
@@ -449,27 +370,23 @@ pool = FREE_SOURCES;
 } else {
 const vals = new Set();
 const fKeys = ["tianShang", "season", "collab", "grandPrize", "advance", "gift", "color", "grade", "location", "limitBuy", "series", "freeSource"];
-allItems.filter(function(i) {
-return i.mainCat === currentMainTab && (!sub || i.subCat === sub);
-}).forEach(function(i) {
-fKeys.forEach(function(k) { if (i[k]) vals.add(i[k]); });
-});
+allItems.filter(i => i.mainCat === currentMainTab && (!sub || i.subCat === sub))
+.forEach(i => fKeys.forEach(k => { if (i[k]) vals.add(i[k]); }));
 pool = [...vals];
 }
 if (pool.length > 0) {
 $('tag-filter-wrap').classList.remove('hidden');
-$('filter-tags-list').innerHTML = pool.map(function(t) {
-return '' + t + '';
-}).join('');
+$('filter-tags-list').innerHTML = pool.map(t =>
+'' + t + ''
+).join('');
 } else {
 $('tag-filter-wrap').classList.add('hidden');
 }
 }
-$('filter-tags-list').onclick = function(e) {
+$('filter-tags-list').onclick = e => {
 const t = e.target.getAttribute('data-ft');
 if (!t) return;
-if (selectedFilterTags.has(t)) selectedFilterTags.delete(t);
-else selectedFilterTags.add(t);
+selectedFilterTags.has(t) ? selectedFilterTags.delete(t) : selectedFilterTags.add(t);
 updateDynamicTagFilter();
 renderCards();
 };
@@ -480,15 +397,13 @@ const keys = [...new Set([...rule.row1, ...rule.row2].filter(Boolean))];
 let h = '';
 if (rule.hasFreeSource) {
 h += '獲取途徑 *' +
-FREE_SOURCES.map(function(x) {
-return '<option value="' + x + '"' + (data.freeSource === x ? ' selected' : '') + '>' + x + '';
-}).join('') + '';
+FREE_SOURCES.map(x => '<option value="' + x + '"' + (data.freeSource === x ? ' selected' : '') + '>' + x + '').join('') +
+'';
 }
-h += '' + keys.map(function(k) {
-return '' + FIELD_META[k].label + '' +
-'<input type="' + FIELD_META[k].type + '" id="df-' + k +
-'" value="' + (data[k] || "") + '" placeholder="' + FIELD_META[k].placeholder + '">';
-}).join('') + '';
+h += '' + keys.map(k =>
+'' + FIELD_META[k].label + '' +
+'<input type="' + FIELD_META[k].type + '" id="df-' + k + '" value="' + (data[k] || "") + '" placeholder="' + FIELD_META[k].placeholder + '">'
+).join('') + '';
 $('dynamic-fields-area').innerHTML = h;
 if (rule.hasWheelTags) {
 $('wrap-wheel-tags').classList.remove('hidden');
@@ -497,42 +412,37 @@ $('wheel-selected-preview').innerText = selectedWheelTags.size > 0 ? [...selecte
 $('wrap-wheel-tags').classList.add('hidden');
 }
 }
-$('f-main-cat').onchange = function() {
+$('f-main-cat').onchange = () => {
 const m = $('f-main-cat').value;
 const subs = SCHEMA[m].subs;
 if (subs.length > 0) {
 $('wrap-f-subcat').classList.remove('hidden');
-$('f-sub-cat').innerHTML = subs.map(function(s) { return '' + s + ''; }).join('');
-renderFormDynamicFields(m, subs[0], {});
+$('f-sub-cat').innerHTML = subs.map(s => '' + s + '').join('');
+renderFormDynamicFields(m, subs.at(0), {});
 } else {
 $('wrap-f-subcat').classList.add('hidden');
 $('f-sub-cat').innerHTML = '';
 renderFormDynamicFields(m, "", {});
 }
 };
-$('f-sub-cat').onchange = function() {
-renderFormDynamicFields($('f-main-cat').value, $('f-sub-cat').value, {});
-};
+$('f-sub-cat').onchange = () => renderFormDynamicFields($('f-main-cat').value, $('f-sub-cat').value, {});
 function renderWheelGrid() {
-$('wheel-options-grid').innerHTML = WHEEL_TAGS.map(function(t) {
-return '' + t + '';
-}).join('');
+$('wheel-options-grid').innerHTML = WHEEL_TAGS.map(t =>
+'' + t + ''
+).join('');
 }
-$('open-wheel-popup-btn').onclick = function() {
+$('open-wheel-popup-btn').onclick = () => {
 renderWheelGrid();
 $('wheel-popup-modal').classList.remove('hidden');
 };
-$('wheel-options-grid').onclick = function(e) {
+$('wheel-options-grid').onclick = e => {
 const t = e.target.getAttribute('data-wt');
 if (!t) return;
-if (selectedWheelTags.has(t)) selectedWheelTags.delete(t);
-else selectedWheelTags.add(t);
+selectedWheelTags.has(t) ? selectedWheelTags.delete(t) : selectedWheelTags.add(t);
 renderWheelGrid();
 $('wheel-selected-preview').innerText = selectedWheelTags.size > 0 ? [...selectedWheelTags].join('、') : '尚未選擇';
 };
-$('close-wheel-popup').onclick = function() {
-$('wheel-popup-modal').classList.add('hidden');
-};
+$('close-wheel-popup').onclick = () => $('wheel-popup-modal').classList.add('hidden');
 function openForm(item) {
 $('modal-form-title').innerText = item ? "編輯外觀" : "新增外觀";
 $('f-id').value = item ? item.id : "";
@@ -542,8 +452,8 @@ const subs = SCHEMA[m].subs;
 let s = "";
 if (subs.length > 0) {
 $('wrap-f-subcat').classList.remove('hidden');
-$('f-sub-cat').innerHTML = subs.map(function(x) { return '' + x + ''; }).join('');
-s = (item && subs.includes(item.subCat)) ? item.subCat : ($('subcat-filter').value || subs[0]);
+$('f-sub-cat').innerHTML = subs.map(x => '' + x + '').join('');
+s = (item && subs.includes(item.subCat)) ? item.subCat : ($('subcat-filter').value || subs.at(0));
 $('f-sub-cat').value = s;
 } else {
 $('wrap-f-subcat').classList.add('hidden');
@@ -557,55 +467,45 @@ selectedWheelTags = new Set(item && item.wheelTags ? item.wheelTags : []);
 renderFormDynamicFields(m, s, item || {});
 $('form-modal').classList.remove('hidden');
 }
-$('open-add-btn').onclick = function() { openForm(null); };
-$('close-form-x').onclick = $('cancel-form-btn').onclick = function() {
-$('form-modal').classList.add('hidden');
-};
-$('save-form-btn').onclick = async function() {
+$('open-add-btn').onclick = () => openForm(null);
+$('close-form-x').onclick = $('cancel-form-btn').onclick = () => $('form-modal').classList.add('hidden');
+$('save-form-btn').onclick = async () => {
 const name = $('f-name').value.trim();
 if (!name) return alert("請填寫外觀名稱！");
 const btn = $('save-form-btn');
-btn.disabled = true;
-btn.innerText = "儲存中...";
+btn.disabled = true; btn.innerText = "儲存中...";
 try {
 const id = $('f-id').value;
 const m = $('f-main-cat').value;
 const s = $('f-sub-cat').value;
 const rule = getRule(m, s);
 const p = {
-mainCat: m,
-subCat: s,
-name: name,
+mainCat: m, subCat: s, name,
 link: $('f-link').value.trim(),
 note: $('f-note').value.trim(),
-images: $('f-media').value.split('\n').map(function(u) { return u.trim(); }).filter(Boolean)
+images: $('f-media').value.split('\n').map(u => u.trim()).filter(Boolean)
 };
-Object.keys(FIELD_META).forEach(function(k) {
+Object.keys(FIELD_META).forEach(k => {
 const el = $('df-' + k);
 p[k] = el ? el.value.trim() : "";
 });
 p.freeSource = rule.hasFreeSource && $('df-freeSource') ? $('df-freeSource').value : "";
 p.wheelTags = rule.hasWheelTags ? [...selectedWheelTags] : [];
-if (id) {
-await db.collection("outfits").doc(id).update(p);
-} else {
-p.createdAt = Date.now();
-await db.collection("outfits").add(p);
-}
+if (id) await db.collection("outfits").doc(id).update(p);
+else { p.createdAt = Date.now(); await db.collection("outfits").add(p); }
 $('form-modal').classList.add('hidden');
 loadData();
 } catch (e) {
 alert("儲存失敗：" + e.message);
 } finally {
-btn.disabled = false;
-btn.innerText = "儲存";
+btn.disabled = false; btn.innerText = "儲存";
 }
 };
 async function loadData() {
 $('status-text').innerText = "載入中…";
 try {
 const snap = await db.collection("outfits").get();
-allItems = snap.docs.map(function(d) { return Object.assign({ id: d.id }, d.data()); });
+allItems = snap.docs.map(d => Object.assign({ id: d.id }, d.data()));
 updateDynamicTagFilter();
 renderCards();
 } catch (e) {
@@ -613,7 +513,7 @@ $('status-text').innerText = "讀取失敗：" + e.message;
 }
 }
 function isVideo(u) {
-const l = u.toLowerCase().split('?')[0];
+const l = u.toLowerCase().split('?').at(0);
 return l.endsWith('.mp4') || l.endsWith('.webm') || l.endsWith('.ogg');
 }
 function fmtCell(i, k) {
@@ -630,7 +530,7 @@ const sub = $('subcat-filter').value;
 const kw = $('search-input').value.toLowerCase();
 const unrel = $('tw-unreleased').checked;
 const today = new Date().toISOString().slice(0, 10);
-let list = allItems.filter(function(i) {
+let list = allItems.filter(i => {
 if ((i.mainCat || "時裝") !== currentMainTab) return false;
 if (sub && i.subCat !== sub) return false;
 if (unrel && i.twDate && i.twDate <= today) return false;
@@ -640,23 +540,20 @@ const s = new Set([
 i.collab, i.grandPrize, i.advance, i.gift, i.color,
 i.grade, i.location, i.limitBuy, i.series
 ].filter(Boolean));
-for (let t of selectedFilterTags) if (!s.has(t)) return false;
+for (const t of selectedFilterTags) if (!s.has(t)) return false;
 }
-if (kw) {
-const txt = Object.values(i).flat().join(" ").toLowerCase();
-if (!txt.includes(kw)) return false;
-}
+if (kw && !Object.values(i).flat().join(" ").toLowerCase().includes(kw)) return false;
 return true;
 });
-list.sort(function(a, b) {
+list.sort((a, b) => {
 const ta = a.twDate || a.cnDate || a.twVer || a.cnVer || String(a.createdAt || 0);
 const tb = b.twDate || b.cnDate || b.twVer || b.cnVer || String(b.createdAt || 0);
 return sortDesc ? tb.localeCompare(ta) : ta.localeCompare(tb);
 });
 $('status-text').innerText = '【' + currentMainTab + (sub ? ' - ' + sub : '') + '】共 ' + list.length + ' 筆外觀資料';
-$('cards-container').innerHTML = list.map(function(i) {
+$('cards-container').innerHTML = list.map(i => {
 const rule = getRule(i.mainCat || currentMainTab, i.subCat || "");
-const c = (i.images && i.images.length > 0) ? i.images[0] : "";
+const c = (i.images && i.images.length > 0) ? i.images.at(0) : "";
 let m = '無預覽圖';
 if (c) {
 m = isVideo(c)
@@ -664,15 +561,11 @@ m = isVideo(c)
 : '';
 }
 const align = rule.twoCol
-? '' + rule.row1.slice(0, 2).map(function(k) { return fmtCell(i, k); }).join('') + ''
-: '' + rule.row1.map(function(k) { return fmtCell(i, k); }).join('') + rule.row2.map(function(k) { return fmtCell(i, k); }).join('') + '';
+? '' + rule.row1.slice(0, 2).map(k => fmtCell(i, k)).join('') + ''
+: '' + rule.row1.map(k => fmtCell(i, k)).join('') + rule.row2.map(k => fmtCell(i, k)).join('') + '';
 let bg = '';
-if (rule.hasFreeSource && i.freeSource) {
-bg += '' + i.freeSource + '';
-}
-if (rule.hasWheelTags && i.wheelTags) {
-bg += i.wheelTags.map(function(t) { return '' + t + ''; }).join('');
-}
+if (rule.hasFreeSource && i.freeSource) bg += '' + i.freeSource + '';
+if (rule.hasWheelTags && i.wheelTags) bg += i.wheelTags.map(t => '' + t + '').join('');
 return '' + m + '' +
 '' + i.mainCat + (i.subCat ? ' · ' + i.subCat : '') + '' +
 '' + i.name + '' +
@@ -682,10 +575,10 @@ align + (bg ? '' + bg + '' : '') +
 '刪除';
 }).join('');
 }
-$('app-view').onclick = async function(e) {
+$('app-view').onclick = async e => {
 const id = e.target.getAttribute('data-id');
 if (!id) return;
-const i = allItems.find(function(x) { return x.id === id; });
+const i = allItems.find(x => x.id === id);
 if (!i) return;
 if (e.target.classList.contains('open-detail')) {
 const rule = getRule(i.mainCat, i.subCat);
@@ -693,13 +586,13 @@ const keys = [...new Set([...rule.row1, ...rule.row2].filter(Boolean))];
 $('d-name').innerText = i.name;
 let ln = ['分類：' + i.mainCat + (i.subCat ? ' / ' + i.subCat : '')];
 if (rule.hasFreeSource && i.freeSource) ln.push('獲取途徑：' + i.freeSource);
-keys.forEach(function(k) { if (i[k]) ln.push(FIELD_META[k].label + '：' + i[k]); });
+keys.forEach(k => { if (i[k]) ln.push(FIELD_META[k].label + '：' + i[k]); });
 if (i.link) ln.push('公告連結：點此開啟');
 if (i.note) ln.push('備註：' + i.note);
 $('d-info').innerHTML = ln.join('
 ');
-$('d-tags').innerHTML = (i.wheelTags || []).map(function(t) { return '' + t + ''; }).join('');
-$('d-media').innerHTML = (i.images || []).map(function(u) { return isVideo(u) ? '' : ''; }).join('');
+$('d-tags').innerHTML = (i.wheelTags || []).map(t => '' + t + '').join('');
+$('d-media').innerHTML = (i.images || []).map(u => isVideo(u) ? '' : '').join('');
 $('detail-modal').classList.remove('hidden');
 }
 if (e.target.classList.contains('edit-item')) openForm(i);
@@ -708,23 +601,23 @@ await db.collection("outfits").doc(id).delete();
 loadData();
 }
 };
-$('close-detail-btn').onclick = function() { $('detail-modal').classList.add('hidden'); };
-$('export-btn').onclick = function() {
+$('close-detail-btn').onclick = () => $('detail-modal').classList.add('hidden');
+$('export-btn').onclick = () => {
 const b = new Blob([JSON.stringify(allItems, null, 2)], { type: "application/json" });
 const a = document.createElement("a");
 a.href = URL.createObjectURL(b);
 a.download = 'nsh-outfits-' + new Date().toISOString().slice(0, 10) + '.json';
 a.click();
 };
-$('import-btn').onclick = function() { $('import-file').click(); };
-$('import-file').onchange = async function(e) {
-const f = e.target.files[0];
+$('import-btn').onclick = () => $('import-file').click();
+$('import-file').onchange = async e => {
+const f = e.target.files.item(0);
 if (!f) return;
 try {
 const arr = JSON.parse(await f.text());
 if (!Array.isArray(arr)) throw new Error("格式錯誤");
-for (let idx = 0; idx < arr.length; idx++) {
-const { id, ...c } = arr[idx];
+for (const o of arr) {
+const { id, ...c } = o;
 c.mainCat = c.mainCat || "時裝";
 c.createdAt = c.createdAt || Date.now();
 await db.collection("outfits").add(c);
@@ -735,3 +628,7 @@ loadData();
 alert("匯入失敗：" + err.message);
 }
 };
+} catch (err) {
+document.getElementById('login-msg').innerText = "錯誤：" + err.message;
+}
+})();
