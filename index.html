@@ -589,8 +589,8 @@ if (rule.hasFreeSource && i.freeSource) ln.push('獲取途徑：' + i.freeSource
 keys.forEach(k => { if (i[k]) ln.push(FIELD_META[k].label + '：' + i[k]); });
 if (i.link) ln.push('公告連結：點此開啟');
 if (i.note) ln.push('備註：' + i.note);
-$('d-info').innerHTML = ln.join('
-');
+$('d-info').innerHTML = ln.join('<br>');
+
 $('d-tags').innerHTML = (i.wheelTags || []).map(t => '' + t + '').join('');
 $('d-media').innerHTML = (i.images || []).map(u => isVideo(u) ? '' : '').join('');
 $('detail-modal').classList.remove('hidden');
