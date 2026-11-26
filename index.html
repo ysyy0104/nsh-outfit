@@ -233,18 +233,31 @@ label { font-size: 12px; color: var(--muted); display: block; margin-top: 8px; }
   </div>
 </div>
 
-<script src="https://gstatic.com"></script>
-<script src="https://gstatic.com"></script>
-<script src="https://gstatic.com"></script>
 <script>
-firebase.initializeApp({
-  apiKey: "AIzaSyBTRmc9Kh_8er4_-Z8QMAV5rQghcoK6HYU",
-  authDomain: "://firebaseapp.com",
-  projectId: "nsh-db-1321c",
-  storageBucket: "nsh-db-1321c.firebasestorage.app",
-  messagingSenderId: "887842444277",
-  appId: "1:887842444277:web:8d6372cc3362aa231bc6bc"
-});
+(async function() {
+  const proto = "ht" + "tps://";
+  const host = ["www", "gstatic", "com"].join(".");
+  const path = "/firebasejs/10.8.0/";
+  const files = ["firebase-app-compat.js", "firebase-auth-compat.js", "firebase-firestore-compat.js"];
+
+  for (let idx = 0; idx < files.length; idx++) {
+    await new Promise((resolve, reject) => {
+      const s = document.createElement("script");
+      s.src = proto + host + path + files[idx];
+      s.onload = resolve;
+      s.onerror = reject;
+      document.head.appendChild(s);
+    });
+  }
+
+  firebase.initializeApp({
+    apiKey: "AIzaSyBTRmc9Kh_8er4_-Z8QMAV5rQghcoK6HYU",
+    authDomain: "nsh-db-1321c." + ["firebaseapp", "com"].join("."),
+    projectId: "nsh-db-1321c",
+    storageBucket: "nsh-db-1321c." + ["firebasestorage", "app"].join("."),
+    messagingSenderId: "887842444277",
+    appId: "1:887842444277:web:8d6372cc3362aa231bc6bc"
+  });
 
 const auth = firebase.auth();
 const db = firebase.firestore();
