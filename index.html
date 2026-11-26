@@ -468,18 +468,43 @@ return opt;
 }));
 area.appendChild(el("div", null, [el("label", { text: "獲取途徑 *" }), sel]));
 }
-const grid = el("div", { className: "grid-2" });
-for (const k of keys) {
-const meta = FIELD_META[k];
-const inp = el("input", {
-type: meta.type,
-id: "df-" + k,
-placeholder: meta.placeholder
-});
-inp.value = data[k] || "";
-grid.appendChild(el("div", null, [el("label", { text: meta.label }), inp]));
-}
-area.appendChild(grid);
+    const otherKeys = keys.filter(k => !["cnDate", "cnVer", "twDate", "twVer"].includes(k));
+    const leftCol = el("div");
+    const rightCol = el("div");
+
+    for (const k of otherKeys) {
+      const meta = FIELD_META[k];
+      const inp = el("input", { type: meta.type, id: "df-" + k, placeholder: meta.placeholder });
+      inp.value = data[k] || "";
+      leftCol.appendChild(el("div", null, [el("label", { text: meta.label }), inp]));
+    }
+
+    const addServerRow = (dateKey, verKey) => {
+      const hasD = keys.includes(dateKey), hasV = keys.includes(verKey);
+      if (!hasD && !hasV) return;
+      const row = el("div", { className: (hasD && hasV) ? "grid-2" : "" });
+      if (hasD) {
+        const inpD = el("input", { type: "date", id: "df-" + dateKey });
+        inpD.value = data[dateKey] || "";
+        row.appendChild(el("div", null, [el("label", { text: FIELD_META[dateKey].label }), inpD]));
+      }
+      if (hasV) {
+        const inpV = el("input", { type: "text", id: "df-" + verKey, placeholder: FIELD_META[verKey].placeholder });
+        inpV.value = data[verKey] || "";
+        row.appendChild(el("div", null, [el("label", { text: FIELD_META[verKey].label }), inpV]));
+      }
+      rightCol.appendChild(row);
+    };
+
+    addServerRow("cnDate", "cnVer"); // 第一排：陸服上線日期 ＋ 陸服上線版本
+    addServerRow("twDate", "twVer"); // 第二排：台服上線日期 ＋ 台服上線版本（在陸服正下方）
+
+    const mainGrid = el("div", { className: otherKeys.length > 0 ? "grid-2" : "" }, [
+      otherKeys.length > 0 ? leftCol : null,
+      rightCol
+    ]);
+    area.appendChild(mainGrid);
+
 if (rule.hasWheelTags) {
 $('wrap-wheel-tags').classList.remove('hidden');
 $('wheel-selected-preview').innerText = selectedWheelTags.size > 0 ? [...selectedWheelTags].join('、') : '尚未選擇';
