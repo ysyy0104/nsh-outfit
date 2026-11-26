@@ -191,7 +191,6 @@ label { font-size: 12px; color: var(--muted); display: block; margin-top: 8px; }
   const db = firebase.firestore();
   const $ = id => document.getElementById(id);
 
-  // 安全的純 DOM 建立工具（不含任何 HTML 標籤字串）
   function el(tag, props, children) {
     const node = document.createElement(tag);
     if (props) {
@@ -211,6 +210,7 @@ label { font-size: 12px; color: var(--muted); display: block; margin-top: 8px; }
     return node;
   }
 
+  // 嚴格依照 9 大分類與各自兩列對齊順序定義
   const SCHEMA = {
     "時裝": {
       subs: ["時裝", "戰令時裝", "綁玉時裝", "免費時裝"],
@@ -230,7 +230,7 @@ label { font-size: 12px; color: var(--muted); display: block; margin-top: 8px; }
     "武器": {
       subs: ["賽年神兵", "流派武器", "承影武器"],
       rules: {
-        "賽年神兵": { row1: ["", "cnDate", "cnVer"], row2: ["", "twDate", "twVer"] },
+        "賽年神兵": { row1: ["cnDate", "cnVer"], row2: ["twDate", "twVer"], gridCols: "92px 1fr" },
         "流派武器": { row1: ["price", "cnDate", "cnVer"], row2: ["collab", "twDate", "twVer"] },
         "承影武器": { row1: ["price", "cnDate", "cnVer"], row2: ["collab", "twDate", "twVer"] }
       }
@@ -260,9 +260,9 @@ label { font-size: 12px; color: var(--muted); display: block; margin-top: 8px; }
       rules: {
         "靈寵": { row1: ["color", "cnDate", "cnVer"], row2: ["grade", "twDate", "twVer"] },
         "商城直售": { row1: ["color", "cnDate", "cnVer"], row2: ["grade", "twDate", "twVer"] },
-        "扭蛋機": { row1: ["color", "cnVer", ""], row2: ["grade", "twVer", ""] },
-        "珍萌大會": { row1: ["color", "cnVer", "location"], row2: ["grade", "twVer", ""] },
-        "野外捕捉": { row1: ["color", "cnVer", "location"], row2: ["grade", "twVer", ""] },
+        "扭蛋機": { row1: ["color", "cnVer"], row2: ["grade", "twVer"], gridCols: "1fr 1fr" },
+        "珍萌大會": { row1: ["color", "cnVer", "location"], row2: ["grade", "twVer", ""], gridCols: "1fr 76px 1fr" },
+        "野外捕捉": { row1: ["color", "cnVer", "location"], row2: ["grade", "twVer", ""], gridCols: "1fr 76px 1fr" },
         "免費獲取": { row1: ["color", "cnDate", "cnVer"], row2: ["grade", "twDate", "twVer"] }
       }
     },
@@ -281,7 +281,7 @@ label { font-size: 12px; color: var(--muted); display: block; margin-top: 8px; }
         "莊園組件": { row1: ["price", "cnDate", "cnVer"], row2: ["gift", "twDate", "twVer"] },
         "俠緣外觀": { row1: ["price", "cnDate", "cnVer"], row2: ["", "twDate", "twVer"] },
         "登入介面": { row1: ["price", "cnDate", "cnVer"], row2: ["gift", "twDate", "twVer"] },
-        "國色獎勵": { row1: ["cnVer", "twVer", ""], row2: ["", "", ""], twoCol: true },
+        "國色獎勵": { row1: ["cnVer", "twVer"], row2: [], gridCols: "1fr 1fr" },
         "神賜外觀": { row1: ["price", "cnDate", "cnVer"], row2: ["advance", "twDate", "twVer"] }
       }
     }
@@ -320,7 +320,6 @@ label { font-size: 12px; color: var(--muted); display: block; margin-top: 8px; }
     return cat.rules[s] || cat.rules["_default"] || { row1: ["price", "cnDate", "cnVer"], row2: ["", "twDate", "twVer"] };
   }
 
-  // 建立 9 大分頁按鈕與主分類選單
   const mainKeys = Object.keys(SCHEMA);
   const tabsBar = $('main-tabs-bar');
   const mainCatSel = $('f-main-cat');
@@ -436,7 +435,7 @@ label { font-size: 12px; color: var(--muted); display: block; margin-top: 8px; }
     listEl.replaceChildren();
 
     if (pool.length > 0) {
-      wrap.classList.remove('hidden');
+wrap.classList.remove('hidden');
 for (const t of pool) {
 listEl.appendChild(el("span", {
 className: "tag-chip" + (selectedFilterTags.has(t) ? " active" : ""),
@@ -658,11 +657,11 @@ css: "display:flex;align-items:center;justify-content:center;color:#666",
 text: "無預覽圖"
 });
 }
-const alignBox = el("div", { className: rule.twoCol ? "align-box two-col" : "align-box" });
-if (rule.twoCol) {
-for (const k of rule.row1.slice(0, 2)) alignBox.appendChild(buildCell(i, k));
-} else {
+const boxProps = { className: "align-box" };
+if (rule.gridCols) boxProps.css = "grid-template-columns:" + rule.gridCols;
+const alignBox = el("div", boxProps);
 for (const k of rule.row1) alignBox.appendChild(buildCell(i, k));
+if (rule.row2 && rule.row2.length > 0) {
 for (const k of rule.row2) alignBox.appendChild(buildCell(i, k));
 }
 const badges = [];
