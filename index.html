@@ -5,60 +5,132 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>逆水寒手游外觀資料庫｜台服・陸服</title>
 <style>
-:root { --bg: #121212; --card: #1e1e1e; --sub: #262626; --border: #383838; --text: #eeeeee; --muted: #999999; --primary: #4a90e2; --accent: #f5a623; }
-body.light { --bg: #f4f5f7; --card: #ffffff; --sub: #f0f2f5; --border: #dcdcdc; --text: #222222; --muted: #666666; --primary: #2b7de9; --accent: #d98200; }
-body { font-family: "Microsoft JhengHei", sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 16px; transition: 0.2s; }
+:root {
+  --bg: #121212; --card: #1e1e1e; --sub: #262626; --border: #383838;
+  --text: #eee; --muted: #999; --primary: #4a90e2; --accent: #f5a623;
+}
+body.light {
+  --bg: #f4f5f7; --card: #fff; --sub: #f0f2f5; --border: #dcdcdc;
+  --text: #222; --muted: #666; --primary: #2b7de9; --accent: #d98200;
+}
+body {
+  font-family: "Microsoft JhengHei", sans-serif;
+  background: var(--bg); color: var(--text);
+  margin: 0; padding: 16px; transition: .2s;
+}
 .hidden { display: none !important; }
 .container { max-width: 1180px; margin: auto; }
-.panel { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 14px; }
-input, textarea, select { padding: 8px 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--sub); color: var(--text); width: 100%; box-sizing: border-box; font-size: 13px; margin-top: 4px; }
-button { padding: 7px 12px; border-radius: 6px; border: 1px solid var(--border); background: var(--sub); color: var(--text); cursor: pointer; font-size: 13px; font-weight: bold; }
-button:hover { opacity: 0.85; }
+.panel {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 16px; margin-bottom: 14px;
+}
+input, textarea, select {
+  padding: 8px 10px; border-radius: 6px;
+  border: 1px solid var(--border); background: var(--sub);
+  color: var(--text); width: 100%; box-sizing: border-box;
+  font-size: 13px; margin-top: 4px;
+}
+button {
+  padding: 7px 12px; border-radius: 6px;
+  border: 1px solid var(--border); background: var(--sub);
+  color: var(--text); cursor: pointer; font-size: 13px; font-weight: bold;
+}
+button:hover { opacity: .85; }
 .btn-primary { background: var(--primary); color: #fff; border: none; }
 .btn-danger { background: #d9534f; color: #fff; border: none; }
-.header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 12px; }
-.header-actions { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-.main-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.header, .header-actions, .main-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+}
+.header { justify-content: space-between; margin-bottom: 12px; }
+.main-tabs { margin-bottom: 12px; }
 .main-tab { padding: 8px 14px; font-size: 14px; border-radius: 8px; }
-.main-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
-.tag-chip { display: inline-block; padding: 4px 10px; border-radius: 15px; border: 1px solid var(--border); background: var(--sub); font-size: 12px; cursor: pointer; margin: 3px; user-select: none; }
-.tag-chip.active { background: var(--primary); color: #fff; border-color: var(--primary); }
-.filter-bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
+.main-tab.active {
+  background: var(--primary); color: #fff; border-color: var(--primary);
+}
+.tag-chip {
+  display: inline-block; padding: 4px 10px; border-radius: 15px;
+  border: 1px solid var(--border); background: var(--sub);
+  font-size: 12px; cursor: pointer; margin: 3px; user-select: none;
+}
+.tag-chip.active {
+  background: var(--primary); color: #fff; border-color: var(--primary);
+}
+.filter-bar {
+  display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+  justify-content: space-between; margin-top: 10px;
+  padding-top: 10px; border-top: 1px solid var(--border);
+}
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-@media (max-width: 650px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+@media (max-width: 650px) { .grid-2 { grid-template-columns: 1fr; } }
 label { font-size: 12px; color: var(--muted); display: block; margin-top: 8px; }
-.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
-.card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; }
-.card-media { width: 100%; height: 230px; object-fit: cover; background: #000; cursor: pointer; }
-.card-body { padding: 12px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
-/* 陸服台服兩列嚴格對齊網格 */
-.align-box { background: var(--sub); border: 1px solid var(--border); border-radius: 6px; padding: 8px; margin-top: 8px; font-size: 12px; display: grid; grid-template-columns: 1fr 92px 68px; gap: 4px 6px; align-items: center; }
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+}
+.card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; overflow: hidden;
+  display: flex; flex-direction: column;
+}
+.card-media {
+  width: 100%; height: 230px; object-fit: cover;
+  background: #000; cursor: pointer;
+}
+.card-body {
+  padding: 12px; flex: 1;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.align-box {
+  background: var(--sub); border: 1px solid var(--border);
+  border-radius: 6px; padding: 8px; margin-top: 8px; font-size: 12px;
+  display: grid; grid-template-columns: 1fr 92px 68px;
+  gap: 4px 6px; align-items: center;
+}
 .align-box.two-col { grid-template-columns: 1fr 1fr; }
-.align-cell { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.align-cell {
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
 .align-accent { color: var(--accent); font-weight: bold; }
 .align-muted { color: var(--muted); }
-.badge { display: inline-block; font-size: 11px; padding: 2px 6px; border-radius: 4px; background: var(--sub); border: 1px solid var(--border); margin: 2px 3px 2px 0; }
-.modal { position: fixed; inset: 0; background: rgba(0,0,0,0.82); display: flex; justify-content: center; align-items: center; padding: 16px; z-index: 999; }
-.modal-box { background: var(--card); border: 1px solid var(--border); border-radius: 10px; max-width: 720px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 20px; }
-.modal-box img, .modal-box video { width: 100%; border-radius: 8px; margin-top: 10px; }
+.badge {
+  display: inline-block; font-size: 11px; padding: 2px 6px;
+  border-radius: 4px; background: var(--sub);
+  border: 1px solid var(--border); margin: 2px 3px 2px 0;
+}
+.modal {
+  position: fixed; inset: 0; background: rgba(0,0,0,.82);
+  display: flex; justify-content: center; align-items: center;
+  padding: 16px; z-index: 999;
+}
+.modal-box {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; max-width: 720px; width: 100%;
+  max-height: 90vh; overflow-y: auto; padding: 20px;
+}
+.modal-box img, .modal-box video {
+  width: 100%; border-radius: 8px; margin-top: 10px;
+}
 </style>
 </head>
 <body>
 
-<div id="login-view" class="panel" style="max-width: 380px; margin: 90px auto;">
-  <h2 style="margin-top:0;">管理員登入</h2>
+<div id="login-view" class="panel" style="max-width:380px;margin:90px auto">
+  <h2 style="margin-top:0">管理員登入</h2>
   <input type="email" id="email" placeholder="管理員信箱">
-  <input type="password" id="password" placeholder="密碼" style="margin-top:8px;">
-  <button id="login-btn" type="button" class="btn-primary" style="width:100%; margin-top:12px; padding:10px;">登入資料庫</button>
-  <p id="login-msg" style="color:#ff6b6b; font-size:13px; margin-bottom:0;"></p>
+  <input type="password" id="password" placeholder="密碼" style="margin-top:8px">
+  <button id="login-btn" type="button" class="btn-primary"
+    style="width:100%;margin-top:12px;padding:10px">登入資料庫</button>
+  <p id="login-msg" style="color:#ff6b6b;font-size:13px;margin-bottom:0"></p>
 </div>
 
 <div id="app-view" class="container hidden">
   <div class="header">
     <div>
-      <span style="font-size:12px; color:var(--muted);">逆水寒手游外觀資料庫｜台服・陸服</span>
-      <h1 style="margin:2px 0 0; font-size:20px;">逆水寒手游外觀資料庫</h1>
+      <span style="font-size:12px;color:var(--muted)">
+        逆水寒手游外觀資料庫｜台服・陸服
+      </span>
+      <h1 style="margin:2px 0 0;font-size:20px">逆水寒手游外觀資料庫</h1>
     </div>
     <div class="header-actions">
       <button id="theme-btn" type="button">明暗</button>
@@ -70,614 +142,781 @@ label { font-size: 12px; color: var(--muted); display: block; margin-top: 8px; }
     </div>
   </div>
 
-  <!-- 9 大主分頁 -->
   <div id="main-tabs-bar" class="main-tabs"></div>
 
-  <!-- 獨立篩選區 -->
   <div class="panel">
-    <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between;">
-      <div style="display:flex; flex-wrap:wrap; gap:8px; align-items:center; flex:1;">
-        <select id="subcat-filter" style="width:160px; margin:0;"></select>
-        <input type="text" id="search-input" placeholder="搜尋名稱、欄位內容、版本..." style="max-width:280px; margin:0;">
+    <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+      justify-content:space-between">
+      <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;flex:1">
+        <select id="subcat-filter" style="width:160px;margin:0"></select>
+        <input type="text" id="search-input"
+          placeholder="搜尋名稱、欄位內容、版本..." style="max-width:280px;margin:0">
       </div>
-      <div style="display:flex; gap:10px; align-items:center;">
-        <label style="margin:0; display:flex; align-items:center; gap:5px; cursor:pointer; color:var(--text);">
-          <input type="checkbox" id="tw-unreleased" style="width:auto; margin:0;"> 只看台服未上線
+      <div style="display:flex;gap:10px;align-items:center">
+        <label style="margin:0;display:flex;align-items:center;gap:5px;
+          cursor:pointer;color:var(--text)">
+          <input type="checkbox" id="tw-unreleased" style="width:auto;margin:0">
+          只看台服未上線
         </label>
         <button id="sort-btn" type="button">由新到舊 ↓</button>
       </div>
     </div>
     <div id="tag-filter-wrap" class="filter-bar hidden">
-      <div id="filter-tags-list" style="flex:1;"></div>
-      <button id="clear-tags-btn" type="button" style="padding:4px 8px; font-size:12px;">清除篩選</button>
+      <div id="filter-tags-list" style="flex:1"></div>
+      <button id="clear-tags-btn" type="button"
+        style="padding:4px 8px;font-size:12px">清除篩選</button>
     </div>
   </div>
 
-  <div id="status-text" style="margin-bottom:10px; font-size:13px; color:var(--muted);">載入中…</div>
+  <div id="status-text"
+    style="margin-bottom:10px;font-size:13px;color:var(--muted)">載入中…</div>
   <div id="cards-container" class="cards"></div>
 </div>
 
-<!-- 動態新增 / 編輯表單 Modal -->
 <div id="form-modal" class="modal hidden">
   <div class="modal-box">
-    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:10px;">
-      <h2 id="modal-form-title" style="margin:0; font-size:18px;">新增外觀</h2>
+    <div style="display:flex;justify-content:space-between;align-items:center;
+      border-bottom:1px solid var(--border);padding-bottom:10px">
+      <h2 id="modal-form-title" style="margin:0;font-size:18px">新增外觀</h2>
       <button id="close-form-x" type="button">✕</button>
     </div>
     <input type="hidden" id="f-id">
-
     <div class="grid-2">
-      <div>
-        <label>主分頁 *</label>
-        <select id="f-main-cat"></select>
-      </div>
+      <div><label>主分頁 *</label><select id="f-main-cat"></select></div>
       <div id="wrap-f-subcat">
-        <label>子分類 *</label>
-        <select id="f-sub-cat"></select>
+        <label>子分類 *</label><select id="f-sub-cat"></select>
       </div>
     </div>
-
     <div>
       <label>外觀名稱 *</label>
       <input type="text" id="f-name" placeholder="請輸入外觀名稱">
     </div>
-
-    <!-- 動態專屬欄位容器（依分頁與子分類自動改變） -->
     <div id="dynamic-fields-area"></div>
-
-    <!-- 轉盤專屬：彈出式獎池標籤選擇器 -->
     <div id="wrap-wheel-tags" class="hidden">
       <label>轉盤獎池標籤（可多選）</label>
-      <div style="display:flex; gap:8px; align-items:center; margin-top:4px;">
-        <button id="open-wheel-popup-btn" type="button" class="btn-primary">選擇獎池標籤 ▾</button>
-        <span id="wheel-selected-preview" style="font-size:12px; color:var(--muted);">尚未選擇</span>
+      <div style="display:flex;gap:8px;align-items:center;margin-top:4px">
+        <button id="open-wheel-popup-btn" type="button" class="btn-primary">
+          選擇獎池標籤 ▾
+        </button>
+        <span id="wheel-selected-preview"
+          style="font-size:12px;color:var(--muted)">尚未選擇</span>
       </div>
     </div>
-
     <div class="grid-2">
-      <div><label>公告連結</label><input type="text" id="f-link" placeholder="貼上官方公告網址"></div>
-      <div><label>備註</label><input type="text" id="f-note" placeholder="其他補充說明"></div>
+      <div>
+        <label>公告連結</label>
+        <input type="text" id="f-link" placeholder="貼上官方公告網址">
+      </div>
+      <div>
+        <label>備註</label>
+        <input type="text" id="f-note" placeholder="其他補充說明">
+      </div>
     </div>
-
     <div>
       <label>圖片與動態（可多選，一行一個網址，第一張為封面）</label>
-      <textarea id="f-media" rows="3" placeholder="貼上圖片或 .mp4 動態影片網址..."></textarea>
+      <textarea id="f-media" rows="3"
+        placeholder="貼上圖片或 .mp4 動態影片網址..."></textarea>
     </div>
-
-    <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px; border-top:1px solid var(--border); padding-top:12px;">
+    <div style="display:flex;justify-content:flex-end;gap:10px;
+      margin-top:16px;border-top:1px solid var(--border);padding-top:12px">
       <button id="cancel-form-btn" type="button">取消</button>
       <button id="save-form-btn" class="btn-primary" type="button">儲存</button>
     </div>
   </div>
 </div>
 
-<!-- 轉盤獎池標籤彈出式視窗 -->
-<div id="wheel-popup-modal" class="modal hidden" style="z-index:1100;">
-  <div class="modal-box" style="max-width:420px;">
-    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:8px;">
-      <h3 style="margin:0; font-size:16px;">選擇轉盤獎池標籤（可多選）</h3>
+<div id="wheel-popup-modal" class="modal hidden" style="z-index:1100">
+  <div class="modal-box" style="max-width:420px">
+    <div style="display:flex;justify-content:space-between;align-items:center;
+      border-bottom:1px solid var(--border);padding-bottom:8px">
+      <h3 style="margin:0;font-size:16px">選擇轉盤獎池標籤（可多選）</h3>
       <button id="close-wheel-popup" type="button">完成</button>
     </div>
-    <div id="wheel-options-grid" style="margin-top:12px; display:flex; flex-wrap:wrap; gap:6px;"></div>
+    <div id="wheel-options-grid"
+      style="margin-top:12px;display:flex;flex-wrap:wrap;gap:6px"></div>
   </div>
 </div>
 
-<!-- 詳情多圖檢視 Modal -->
 <div id="detail-modal" class="modal hidden">
   <div class="modal-box">
-    <div style="display:flex; justify-content:space-between; align-items:center;">
-      <h2 id="d-name" style="margin:0;"></h2>
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <h2 id="d-name" style="margin:0"></h2>
       <button id="close-detail-btn" type="button">✕</button>
     </div>
-    <div id="d-info" style="font-size:13px; color:var(--muted); margin:10px 0; line-height:1.7;"></div>
-    <div id="d-tags" style="margin-bottom:10px;"></div>
+    <div id="d-info"
+      style="font-size:13px;color:var(--muted);margin:10px 0;line-height:1.7">
+    </div>
+    <div id="d-tags" style="margin-bottom:10px"></div>
     <div id="d-media"></div>
   </div>
 </div>
 
-<script src="https://gstatic.com"></script>
-<script src="https://gstatic.com"></script>
-<script src="https://gstatic.com"></script>
 <script>
+const proto = "ht" + "tps://";
+const host = ["www", "gstatic", "com"].join(".");
+const path = "/firebasejs/10.8.0/";
+const files = [
+  "firebase-app-compat.js",
+  "firebase-auth-compat.js",
+  "firebase-firestore-compat.js"
+];
+
+function loadScript(f) {
+  return new Promise(function(r, j) {
+    const s = document.createElement("script");
+    s.src = proto + host + path + f;
+    s.onload = r;
+    s.onerror = function() { j(new Error("載入失敗：" + f)); };
+    document.head.appendChild(s);
+  });
+}
+
+(async function init() {
+  try {
+    for (let k = 0; k < files.length; k++) {
+      await loadScript(files[k]);
+    }
 
 firebase.initializeApp({
-  apiKey: "AIzaSyBTRmc9Kh_8er4_-Z8QMAV5rQghcoK6HYU",
-  authDomain: "://firebaseapp.com",
-  projectId: "nsh-db-1321c",
-  storageBucket: "nsh-db-1321c.firebasestorage.app",
-  messagingSenderId: "887842444277",
-  appId: "1:887842444277:web:8d6372cc3362aa231bc6bc"
+apiKey: "AIzaSyBTRmc9Kh_8er4_-Z8QMAV5rQghcoK6HYU",
+authDomain: "nsh-db-1321c." + ["firebaseapp", "com"].join("."),
+projectId: "nsh-db-1321c",
+storageBucket: "nsh-db-1321c." + ["firebasestorage", "app"].join("."),
+messagingSenderId: "887842444277",
+appId: "1:887842444277:web:8d6372cc3362aa231bc6bc"
 });
-const auth = firebase.auth(), db = firebase.firestore();
-const $ = id => document.getElementById(id);
-
-// 9 大分類與專屬欄位規則定義
+const auth = firebase.auth();
+const db = firebase.firestore();
+const $ = function(id) { return document.getElementById(id); };
 const SCHEMA = {
-  "時裝": {
-    subs: ["時裝", "戰令時裝", "綁玉時裝", "免費時裝"],
-    rules: {
-      "時裝":     { row1: ["price", "cnDate", "cnVer"], row2: ["tianShang", "twDate", "twVer"] },
-      "戰令時裝": { row1: ["season", "cnDate", "cnVer"], row2: ["", "twDate", "twVer"] },
-      "綁玉時裝": { row1: ["price", "cnDate", "cnVer"], row2: ["tianShang", "twDate", "twVer"] },
-      "免費時裝": { row1: ["collab", "cnDate", "cnVer"], row2: ["", "twDate", "twVer"], hasFreeSource: true }
-    }
-  },
-  "轉盤": {
-    subs: [],
-    rules: {
-      "_default": { row1: ["collab", "cnDate", "cnVer"], row2: ["grandPrize", "twDate", "twVer"], hasWheelTags: true }
-    }
-  },
-  "武器": {
-    subs: ["賽年神兵", "流派武器", "承影武器"],
-    rules: {
-      "賽年神兵": { row1: ["", "cnDate", "cnVer"], row2: ["", "twDate", "twVer"] },
-      "流派武器": { row1: ["price", "cnDate", "cnVer"], row2: ["collab", "twDate", "twVer"] },
-      "承影武器": { row1: ["price", "cnDate", "cnVer"], row2: ["collab", "twDate", "twVer"] }
-    }
-  },
-  "坐騎": {
-    subs: ["祥瑞", "坐騎", "鞍具/配件"],
-    rules: {
-      "祥瑞":      { row1: ["price", "cnDate", "cnVer"], row2: ["advance", "twDate", "twVer"] },
-      "坐騎":      { row1: ["price", "cnDate", "cnVer"], row2: ["collab", "twDate", "twVer"] },
-      "鞍具/配件": { row1: ["price", "cnDate", "cnVer"], row2: ["collab", "twDate", "twVer"] }
-    }
-  },
-  "技能": {
-    subs: ["絕技外觀", "群俠/百家", "流派技能", "輕功外觀"],
-    rules: {
-      "_default": { row1: ["price", "cnDate", "cnVer"], row2: ["gift", "twDate", "twVer"] }
-    }
-  },
-  "俠棋": {
-    subs: ["棋盤外觀", "棋匣特效", "羈絆特效"],
-    rules: {
-      "_default": { row1: ["price", "cnDate", "cnVer"], row2: ["gift", "twDate", "twVer"] }
-    }
-  },
-  "寵物": {
-    subs: ["靈寵", "商城直售", "扭蛋機", "珍萌大會", "野外捕捉", "免費獲取"],
-    rules: {
-      "靈寵":     { row1: ["color", "cnDate", "cnVer"], row2: ["grade", "twDate", "twVer"] },
-      "商城直售": { row1: ["color", "cnDate", "cnVer"], row2: ["grade", "twDate", "twVer"] },
-      "扭蛋機":   { row1: ["color", "cnVer", ""], row2: ["grade", "twVer", ""] },
-      "珍萌大會": { row1: ["color", "cnVer", "location"], row2: ["grade", "twVer", ""] },
-      "野外捕捉": { row1: ["color", "cnVer", "location"], row2: ["grade", "twVer", ""] },
-      "免費獲取": { row1: ["color", "cnDate", "cnVer"], row2: ["grade", "twDate", "twVer"] }
-    }
-  },
-  "單品": {
-    subs: ["髮型/配飾", "盲盒/禮盒", "燙畫/印花", "绑玉專區"],
-    rules: {
-      "髮型/配飾": { row1: ["price", "cnDate", "cnVer"], row2: ["", "twDate", "twVer"] },
-      "盲盒/禮盒": { row1: ["price", "cnDate", "cnVer"], row2: ["limitBuy", "twDate", "twVer"] },
-      "燙畫/印花": { row1: ["price", "cnDate", "cnVer"], row2: ["series", "twDate", "twVer"] },
-      "绑玉專區":  { row1: ["price", "cnDate", "cnVer"], row2: ["limitBuy", "twDate", "twVer"] }
-    }
-  },
-  "其他": {
-    subs: ["莊園組件", "俠緣外觀", "登入介面", "國色獎勵", "神賜外觀"],
-    rules: {
-      "莊園組件": { row1: ["price", "cnDate", "cnVer"], row2: ["gift", "twDate", "twVer"] },
-      "俠緣外觀": { row1: ["price", "cnDate", "cnVer"], row2: ["", "twDate", "twVer"] },
-      "登入介面": { row1: ["price", "cnDate", "cnVer"], row2: ["gift", "twDate", "twVer"] },
-      "國色獎勵": { row1: ["cnVer", "twVer", ""], row2: ["", "", ""], twoCol: true },
-      "神賜外觀": { row1: ["price", "cnDate", "cnVer"], row2: ["advance", "twDate", "twVer"] }
-    }
-  }
+"時裝": {
+subs: ["時裝", "戰令時裝", "綁玉時裝", "免費時裝"],
+rules: {
+"時裝": {
+row1: ["price", "cnDate", "cnVer"],
+row2: ["tianShang", "twDate", "twVer"]
+},
+"戰令時裝": {
+row1: ["season", "cnDate", "cnVer"],
+row2: ["", "twDate", "twVer"]
+},
+"綁玉時裝": {
+row1: ["price", "cnDate", "cnVer"],
+row2: ["tianShang", "twDate", "twVer"]
+},
+"免費時裝": {
+row1: ["collab", "cnDate", "cnVer"],
+row2: ["", "twDate", "twVer"],
+hasFreeSource: true
+}
+}
+},
+"轉盤": {
+subs: [],
+rules: {
+"_default": {
+row1: ["collab", "cnDate", "cnVer"],
+row2: ["grandPrize", "twDate", "twVer"],
+hasWheelTags: true
+}
+}
+},
+"武器": {
+subs: ["賽年神兵", "流派武器", "承影武器"],
+rules: {
+"賽年神兵": {
+row1: ["", "cnDate", "cnVer"],
+row2: ["", "twDate", "twVer"]
+},
+"流派武器": {
+row1: ["price", "cnDate", "cnVer"],
+row2: ["collab", "twDate", "twVer"]
+},
+"承影武器": {
+row1: ["price", "cnDate", "cnVer"],
+row2: ["collab", "twDate", "twVer"]
+}
+}
+},
+"坐騎": {
+subs: ["祥瑞", "坐騎", "鞍具/配件"],
+rules: {
+"祥瑞": {
+row1: ["price", "cnDate", "cnVer"],
+row2: ["advance", "twDate", "twVer"]
+},
+"坐騎": {
+row1: ["price", "cnDate", "cnVer"],
+row2: ["collab", "twDate", "twVer"]
+},
+"鞍具/配件": {
+row1: ["price", "cnDate", "cnVer"],
+row2: ["collab", "twDate", "twVer"]
+}
+}
+},
+"技能": {
+subs: ["絕技外觀", "群俠/百家", "流派技能", "輕功外觀"],
+rules: {
+"_default": {
+row1: ["price", "cnDate", "cnVer"],
+row2: ["gift", "twDate", "twVer"]
+}
+}
+},
+"俠棋": {
+subs: ["棋盤外觀", "棋匣特效", "羈絆特效"],
+rules: {
+"_default": {
+row1: ["price", "cnDate", "cnVer"],
+row2: ["gift", "twDate", "twVer"]
+}
+}
+},
+"寵物": {
+subs: ["靈寵", "商城直售", "扭蛋機", "珍萌大會", "野外捕捉", "免費獲取"],
+rules: {
+"靈寵": {
+row1: ["color", "cnDate", "cnVer"],
+row2: ["grade", "twDate", "twVer"]
+},
+"商城直售": {
+row1: ["color", "cnDate", "cnVer"],
+row2: ["grade", "twDate", "twVer"]
+},
+"扭蛋機": {
+row1: ["color", "cnVer", ""],
+row2: ["grade", "twVer", ""]
+},
+"珍萌大會": {
+row1: ["color", "cnVer", "location"],
+row2: ["grade", "twVer", ""]
+},
+"野外捕捉": {
+row1: ["color", "cnVer", "location"],
+row2: ["grade", "twVer", ""]
+},
+"免費獲取": {
+row1: ["color", "cnDate", "cnVer"],
+row2: ["grade", "twDate", "twVer"]
+}
+}
+},
+"單品": {
+subs: ["髮型/配飾", "盲盒/禮盒", "燙畫/印花", "绑玉專區"],
+rules: {
+"髮型/配飾": {
+row1: ["price", "cnDate", "cnVer"],
+row2: ["", "twDate", "twVer"]
+},
+"盲盒/禮盒": {
+row1: ["price", "cnDate", "cnVer"],
+row2: ["limitBuy", "twDate", "twVer"]
+},
+"燙畫/印花": {
+row1: ["price", "cnDate", "cnVer"],
+row2: ["series", "twDate", "twVer"]
+},
+"绑玉專區": {
+row1: ["price", "cnDate", "cnVer"],
+row2: ["limitBuy", "twDate", "twVer"]
+}
+}
+},
+"其他": {
+subs: ["莊園組件", "俠緣外觀", "登入介面", "國色獎勵", "神賜外觀"],
+rules: {
+"莊園組件": {
+row1: ["price", "cnDate", "cnVer"],
+row2: ["gift", "twDate", "twVer"]
+},
+"俠緣外觀": {
+row1: ["price", "cnDate", "cnVer"],
+row2: ["", "twDate", "twVer"]
+},
+"登入介面": {
+row1: ["price", "cnDate", "cnVer"],
+row2: ["gift", "twDate", "twVer"]
+},
+"國色獎勵": {
+row1: ["cnVer", "twVer", ""],
+row2: ["", "", ""],
+twoCol: true
+},
+"神賜外觀": {
+row1: ["price", "cnDate", "cnVer"],
+row2: ["advance", "twDate", "twVer"]
+}
+}
+}
 };
-
 const FIELD_META = {
-  price:      { label: "售價", placeholder: "例如：2880紋玉 / 1天賞石", type: "text" },
-  tianShang:  { label: "天賞髮型", placeholder: "輸入天賞髮型名稱", type: "text" },
-  season:     { label: "賽季", placeholder: "例如：S1 / 謫仙雷吟", type: "text" },
-  collab:     { label: "聯動", placeholder: "輸入聯動名稱（無則留空）", type: "text" },
-  grandPrize: { label: "大獎", placeholder: "輸入轉盤大獎名稱", type: "text" },
-  advance:    { label: "進階", placeholder: "輸入進階外觀名稱", type: "text" },
-  gift:       { label: "贈禮", placeholder: "輸入贈禮內容（無則留空）", type: "text" },
-  color:      { label: "偏色", placeholder: "輸入偏色名稱", type: "text" },
-  grade:      { label: "品級", placeholder: "例如：典藏 / 珍品", type: "text" },
-  location:   { label: "地點", placeholder: "輸入捕捉或獲取地點", type: "text" },
-  limitBuy:   { label: "限購", placeholder: "例如：限購1次 / 限時", type: "text" },
-  series:     { label: "系列", placeholder: "輸入系列名稱", type: "text" },
-  cnDate:     { label: "陸服上線日期", placeholder: "", type: "date" },
-  cnVer:      { label: "陸服上線版本", placeholder: "例如：1.3.2", type: "text" },
-  twDate:     { label: "台服上線日期", placeholder: "", type: "date" },
-  twVer:      { label: "台服上線版本", placeholder: "例如：1.2.1", type: "text" }
+price: { label: "售價", placeholder: "2880紋玉 / 1天賞石", type: "text" },
+tianShang: { label: "天賞髮型", placeholder: "天賞髮型名稱", type: "text" },
+season: { label: "賽季", placeholder: "例如：S1", type: "text" },
+collab: { label: "聯動", placeholder: "聯動名稱", type: "text" },
+grandPrize: { label: "大獎", placeholder: "轉盤大獎名稱", type: "text" },
+advance: { label: "進階", placeholder: "進階外觀名稱", type: "text" },
+gift: { label: "贈禮", placeholder: "贈禮內容", type: "text" },
+color: { label: "偏色", placeholder: "偏色名稱", type: "text" },
+grade: { label: "品級", placeholder: "典藏 / 珍品", type: "text" },
+location: { label: "地點", placeholder: "捕捉或獲取地點", type: "text" },
+limitBuy: { label: "限購", placeholder: "限購1次", type: "text" },
+series: { label: "系列", placeholder: "系列名稱", type: "text" },
+cnDate: { label: "陸服上線日期", placeholder: "", type: "date" },
+cnVer: { label: "陸服上線版本", placeholder: "1.3.2", type: "text" },
+twDate: { label: "台服上線日期", placeholder: "", type: "date" },
+twVer: { label: "台服上線版本", placeholder: "1.2.1", type: "text" }
 };
-
-const FREE_SOURCES = ["簽到活動", "劇情任務", "探索季藏", "副本掉落", "榮譽挑戰", "江湖門派", "珍玩收藏", "其他"];
-const WHEEL_TAGS = ["髮型", "祥瑞", "坐騎", "環身", "腳印", "站姿", "靈寵", "技能", "武器", "主頁背景"];
-
+const FREE_SOURCES = [
+"簽到活動", "劇情任務", "探索季藏", "副本掉落",
+"榮譽挑戰", "江湖門派", "珍玩收藏", "其他"
+];
+const WHEEL_TAGS = [
+"髮型", "祥瑞", "坐騎", "環身", "腳印",
+"站姿", "靈寵", "技能", "武器", "主頁背景"
+];
 let currentMainTab = "時裝";
 let allItems = [];
 let selectedFilterTags = new Set();
 let selectedWheelTags = new Set();
 let sortDesc = true;
-
-function getRule(mainCat, subCat) {
-  const catObj = SCHEMA[mainCat] || SCHEMA["時裝"];
-  return catObj.rules[subCat] || catObj.rules["_default"] || { row1: ["price", "cnDate", "cnVer"], row2: ["", "twDate", "twVer"] };
+function getRule(m, s) {
+const cat = SCHEMA[m] || SCHEMA["時裝"];
+return cat.rules[s] || cat.rules["_default"] || {
+row1: ["price", "cnDate", "cnVer"],
+row2: ["", "twDate", "twVer"]
+};
 }
-
-// 初始化主分頁按鈕與表單下拉選單
 const mainKeys = Object.keys(SCHEMA);
-$('main-tabs-bar').innerHTML = mainKeys.map(k => '<button type="button" class="main-tab ' + (k === currentMainTab ? 'active' : '') + '" data-tab="' + k + '">' + k + '</button>').join('');
-$('f-main-cat').innerHTML = mainKeys.map(k => '<option value="' + k + '">' + k + '</option>').join('');
-
-$('theme-btn').onclick = () => document.body.classList.toggle('light');
-
-auth.onAuthStateChanged(u => {
-  if (u) {
-    $('login-view').classList.add('hidden');
-    $('app-view').classList.remove('hidden');
-    switchMainTab("時裝");
-    loadData();
-  } else {
-    $('login-view').classList.remove('hidden');
-    $('app-view').classList.add('hidden');
-  }
-});
-
-$('login-btn').onclick = async () => {
-  $('login-msg').innerText = "驗證中...";
-  try {
-    await auth.signInWithEmailAndPassword($('email').value.trim(), $('password').value);
-    $('login-msg').innerText = "";
-  } catch (e) {
-    $('login-msg').innerText = "登入失敗：" + e.message;
-  }
+$('main-tabs-bar').innerHTML = mainKeys.map(function(k) {
+return '' + k + '';
+}).join('');
+$('f-main-cat').innerHTML = mainKeys.map(function(k) {
+return '' + k + '';
+}).join('');
+$('theme-btn').onclick = function() {
+document.body.classList.toggle('light');
 };
-$('logout-btn').onclick = () => auth.signOut();
-
-// 切換主分頁（各分頁獨立篩選狀態）
-function switchMainTab(tabName) {
-  currentMainTab = tabName;
-  selectedFilterTags.clear();
-  $('search-input').value = "";
-  $('tw-unreleased').checked = false;
-  document.querySelectorAll('.main-tab').forEach(b => b.classList.toggle('active', b.getAttribute('data-tab') === tabName));
-
-  const subs = SCHEMA[tabName].subs;
-  if (subs.length > 0) {
-    $('subcat-filter').classList.remove('hidden');
-    $('subcat-filter').innerHTML = '<option value="">全部' + tabName + '分類</option>' + subs.map(s => '<option value="' + s + '">' + s + '</option>').join('');
-  } else {
-    $('subcat-filter').classList.add('hidden');
-    $('subcat-filter').innerHTML = '<option value=""></option>';
-  }
-  updateDynamicTagFilter();
-  renderCards();
+auth.onAuthStateChanged(function(u) {
+if (u) {
+$('login-view').classList.add('hidden');
+$('app-view').classList.remove('hidden');
+switchMainTab("時裝");
+loadData();
+} else {
+$('login-view').classList.remove('hidden');
+$('app-view').classList.add('hidden');
 }
-
-$('main-tabs-bar').onclick = e => {
-  const t = e.target.getAttribute('data-tab');
-  if (t) switchMainTab(t);
+});
+$('login-btn').onclick = async function() {
+$('login-msg').innerText = "驗證中...";
+try {
+await auth.signInWithEmailAndPassword(
+$('email').value.trim(),
+$('password').value
+);
+$('login-msg').innerText = "";
+} catch (e) {
+$('login-msg').innerText = "登入失敗：" + e.message;
+}
 };
-$('subcat-filter').onchange = () => { selectedFilterTags.clear(); updateDynamicTagFilter(); renderCards(); };
+$('logout-btn').onclick = function() { auth.signOut(); };
+function switchMainTab(t) {
+currentMainTab = t;
+selectedFilterTags.clear();
+$('search-input').value = "";
+$('tw-unreleased').checked = false;
+document.querySelectorAll('.main-tab').forEach(function(b) {
+b.classList.toggle('active', b.getAttribute('data-tab') === t);
+});
+const subs = SCHEMA[t].subs;
+if (subs.length > 0) {
+$('subcat-filter').classList.remove('hidden');
+$('subcat-filter').innerHTML =
+'全部' + t + '分類' +
+subs.map(function(s) {
+return '' + s + '';
+}).join('');
+} else {
+$('subcat-filter').classList.add('hidden');
+$('subcat-filter').innerHTML = '';
+}
+updateDynamicTagFilter();
+renderCards();
+}
+$('main-tabs-bar').onclick = function(e) {
+const t = e.target.getAttribute('data-tab');
+if (t) switchMainTab(t);
+};
+$('subcat-filter').onchange = function() {
+selectedFilterTags.clear();
+updateDynamicTagFilter();
+renderCards();
+};
 $('search-input').oninput = renderCards;
 $('tw-unreleased').onchange = renderCards;
-$('sort-btn').onclick = () => { sortDesc = !sortDesc; $('sort-btn').innerText = sortDesc ? "由新到舊 ↓" : "由舊到新 ↑"; renderCards(); };
-$('clear-tags-btn').onclick = () => { selectedFilterTags.clear(); updateDynamicTagFilter(); renderCards(); };
-
-// 依目前分頁自動產生專屬快速標籤篩選（例如轉盤獎池標籤、免費時裝獲取途徑等）
+$('sort-btn').onclick = function() {
+sortDesc = !sortDesc;
+$('sort-btn').innerText = sortDesc ? "由新到舊 ↓" : "由舊到新 ↑";
+renderCards();
+};
+$('clear-tags-btn').onclick = function() {
+selectedFilterTags.clear();
+updateDynamicTagFilter();
+renderCards();
+};
 function updateDynamicTagFilter() {
-  const sub = $('subcat-filter').value;
-  let tagPool = [];
-  if (currentMainTab === "轉盤") {
-    tagPool = WHEEL_TAGS;
-  } else if (currentMainTab === "時裝" && sub === "免費時裝") {
-    tagPool = FREE_SOURCES;
-  } else {
-    const itemsInTab = allItems.filter(i => i.mainCat === currentMainTab && (!sub || i.subCat === sub));
-    const vals = new Set();
-    itemsInTab.forEach(i => {
-      ["tianShang", "season", "collab", "grandPrize", "advance", "gift", "color", "grade", "location", "limitBuy", "series", "freeSource"].forEach(k => {
-        if (i[k]) vals.add(i[k]);
-      });
-    });
-    tagPool = [...vals];
-  }
-
-  if (tagPool.length > 0) {
-    $('tag-filter-wrap').classList.remove('hidden');
-    $('filter-tags-list').innerHTML = tagPool.map(t => '<span class="tag-chip ' + (selectedFilterTags.has(t) ? 'active' : '') + '" data-ft="' + t + '">' + t + '</span>').join('');
-  } else {
-    $('tag-filter-wrap').classList.add('hidden');
-  }
+const sub = $('subcat-filter').value;
+let pool = [];
+if (currentMainTab === "轉盤") {
+pool = WHEEL_TAGS;
+} else if (currentMainTab === "時裝" && sub === "免費時裝") {
+pool = FREE_SOURCES;
+} else {
+const vals = new Set();
+const fKeys = [
+"tianShang", "season", "collab", "grandPrize", "advance",
+"gift", "color", "grade", "location", "limitBuy", "series", "freeSource"
+];
+allItems
+.filter(function(i) {
+return i.mainCat === currentMainTab && (!sub || i.subCat === sub);
+})
+.forEach(function(i) {
+fKeys.forEach(function(k) { if (i[k]) vals.add(i[k]); });
+});
+pool = [...vals];
 }
-
-$('filter-tags-list').onclick = e => {
-  const t = e.target.getAttribute('data-ft');
-  if (!t) return;
-  selectedFilterTags.has(t) ? selectedFilterTags.delete(t) : selectedFilterTags.add(t);
-  updateDynamicTagFilter();
-  renderCards();
-};
-// 動態產生新增/編輯表單欄位
-function renderFormDynamicFields(mainCat, subCat, data = {}) {
-  const rule = getRule(mainCat, subCat);
-  const allKeys = [...new Set([...rule.row1, ...rule.row2].filter(Boolean))];
-  let html = '';
-
-  if (rule.hasFreeSource) {
-    html += '<div><label>獲取途徑 *</label><select id="df-freeSource">' +
-      FREE_SOURCES.map(s => '<option value="' + s + '"' + (data.freeSource === s ? ' selected' : '') + '>' + s + '</option>').join('') +
-      '</select></div>';
-  }
-
-  html += '<div class="grid-2">';
-  allKeys.forEach(k => {
-    const meta = FIELD_META[k];
-    const val = data[k] || "";
-    html += '<div><label>' + meta.label + '</label><input type="' + meta.type + '" id="df-' + k + '" value="' + val + '" placeholder="' + meta.placeholder + '"></div>';
-  });
-  html += '</div>';
-  $('dynamic-fields-area').innerHTML = html;
-
-  if (rule.hasWheelTags) {
-    $('wrap-wheel-tags').classList.remove('hidden');
-    updateWheelPreview();
-  } else {
-    $('wrap-wheel-tags').classList.add('hidden');
-  }
+if (pool.length > 0) {
+$('tag-filter-wrap').classList.remove('hidden');
+$('filter-tags-list').innerHTML = pool.map(function(t) {
+return '' + t + '';
+}).join('');
+} else {
+$('tag-filter-wrap').classList.add('hidden');
 }
-
-function updateWheelPreview() {
-  $('wheel-selected-preview').innerText = selectedWheelTags.size > 0 ? [...selectedWheelTags].join('、') : '尚未選擇';
 }
-
-$('f-main-cat').onchange = () => {
-  const m = $('f-main-cat').value;
-  const subs = SCHEMA[m].subs;
-  if (subs.length > 0) {
-    $('wrap-f-subcat').classList.remove('hidden');
-    $('f-sub-cat').innerHTML = subs.map(s => '<option value="' + s + '">' + s + '</option>').join('');
-    renderFormDynamicFields(m, subs[0]);
-  } else {
-    $('wrap-f-subcat').classList.add('hidden');
-    $('f-sub-cat').innerHTML = '<option value=""></option>';
-    renderFormDynamicFields(m, "");
-  }
+$('filter-tags-list').onclick = function(e) {
+const t = e.target.getAttribute('data-ft');
+if (!t) return;
+if (selectedFilterTags.has(t)) selectedFilterTags.delete(t);
+else selectedFilterTags.add(t);
+updateDynamicTagFilter();
+renderCards();
 };
-
-$('f-sub-cat').onchange = () => {
-  renderFormDynamicFields($('f-main-cat').value, $('f-sub-cat').value);
-};
-
-// 轉盤彈出式多選視窗
-$('open-wheel-popup-btn').onclick = () => {
-  $('wheel-options-grid').innerHTML = WHEEL_TAGS.map(t => '<span class="tag-chip ' + (selectedWheelTags.has(t) ? 'active' : '') + '" data-wt="' + t + '">' + t + '</span>').join('');
-  $('wheel-popup-modal').classList.remove('hidden');
-};
-  $('wheel-options-grid').innerHTML = WHEEL_TAGS.map(t => '<span class="tag-chip ' + (selectedWheelTags.has(t) ? 'active' : '') + '" data-wt="' + t + '">' + t + '</span>').join('');
-  $('wheel-popup-modal').classList.remove('hidden');
-};
-
-$('wheel-options-grid').onclick = e => {
-  const t = e.target.getAttribute('data-wt');
-  if (!t) return;
-  selectedWheelTags.has(t) ? selectedWheelTags.delete(t) : selectedWheelTags.add(t);
-  $('wheel-options-grid').innerHTML = WHEEL_TAGS.map(x => '<span class="tag-chip ' + (selectedWheelTags.has(x) ? 'active' : '') + '" data-wt="' + x + '">' + x + '</span>').join('');
-  updateWheelPreview();
-};
-
-$('close-wheel-popup').onclick = () => $('wheel-popup-modal').classList.add('hidden');
-
-function openForm(item = null) {
-  $('modal-form-title').innerText = item ? "編輯外觀" : "新增外觀";
-  $('f-id').value = item ? item.id : "";
-  const m = item ? (item.mainCat || currentMainTab) : currentMainTab;
-  $('f-main-cat').value = m;
-
-  const subs = SCHEMA[m].subs;
-  let s = "";
-  if (subs.length > 0) {
-    $('wrap-f-subcat').classList.remove('hidden');
-    $('f-sub-cat').innerHTML = subs.map(x => '<option value="' + x + '">' + x + '</option>').join('');
-    s = (item && subs.includes(item.subCat)) ? item.subCat : ($('subcat-filter').value || subs);
-    $('f-sub-cat').value = s;
-  } else {
-    $('wrap-f-subcat').classList.add('hidden');
-    $('f-sub-cat').innerHTML = '<option value=""></option>';
-  }
-
-  $('f-name').value = item ? (item.name || "") : "";
-  $('f-link').value = item ? (item.link || "") : "";
-  $('f-note').value = item ? (item.note || "") : "";
-  $('f-media').value = item ? ((item.images || []).join('\n')) : "";
-  selectedWheelTags = new Set(item && item.wheelTags ? item.wheelTags : []);
-
-  renderFormDynamicFields(m, s, item || {});
-  $('form-modal').classList.remove('hidden');
+function renderFormDynamicFields(m, s, data) {
+data = data || {};
+const rule = getRule(m, s);
+const keys = [...new Set([...rule.row1, ...rule.row2].filter(Boolean))];
+let h = '';
+if (rule.hasFreeSource) {
+h += '獲取途徑 *' +
+FREE_SOURCES.map(function(x) {
+return '<option value="' + x + '"' +
+(data.freeSource === x ? ' selected' : '') + '>' + x + '';
+}).join('') + '';
 }
-
-$('open-add-btn').onclick = () => openForm(null);
-$('close-form-x').onclick = $('cancel-form-btn').onclick = () => $('form-modal').classList.add('hidden');
-
-$('save-form-btn').onclick = async () => {
-  const name = $('f-name').value.trim();
-  if (!name) return alert("請填寫外觀名稱！");
-  const btn = $('save-form-btn');
-  btn.disabled = true; btn.innerText = "儲存中...";
-
-  try {
-    const id = $('f-id').value;
-    const m = $('f-main-cat').value;
-    const s = $('f-sub-cat').value;
-    const rule = getRule(m, s);
-    const payload = {
-      mainCat: m,
-      subCat: s,
-      name: name,
-      link: $('f-link').value.trim(),
-      note: $('f-note').value.trim(),
-      images: $('f-media').value.split('\n').map(u => u.trim()).filter(Boolean)
-    };
-
-    Object.keys(FIELD_META).forEach(k => {
-      const el = $('df-' + k);
-      payload[k] = el ? el.value.trim() : "";
-    });
-    payload.freeSource = rule.hasFreeSource && $('df-freeSource') ? $('df-freeSource').value : "";
-    payload.wheelTags = rule.hasWheelTags ? [...selectedWheelTags] : [];
-
-    if (id) await db.collection("outfits").doc(id).update(payload);
-    else { payload.createdAt = Date.now(); await db.collection("outfits").add(payload); }
-
-    $('form-modal').classList.add('hidden');
-    loadData();
-  } catch (e) {
-    alert("儲存失敗：" + e.message);
-  } finally {
-    btn.disabled = false; btn.innerText = "儲存";
-  }
+h += '' + keys.map(function(k) {
+return '' + FIELD_META[k].label + '' +
+'<input type="' + FIELD_META[k].type + '" id="df-' + k +
+'" value="' + (data[k] || "") +
+'" placeholder="' + FIELD_META[k].placeholder + '">';
+}).join('') + '';
+$('dynamic-fields-area').innerHTML = h;
+if (rule.hasWheelTags) {
+$('wrap-wheel-tags').classList.remove('hidden');
+$('wheel-selected-preview').innerText =
+selectedWheelTags.size > 0 ? [...selectedWheelTags].join('、') : '尚未選擇';
+} else {
+$('wrap-wheel-tags').classList.add('hidden');
+}
+}
+$('f-main-cat').onchange = function() {
+const m = $('f-main-cat').value;
+const subs = SCHEMA[m].subs;
+if (subs.length > 0) {
+$('wrap-f-subcat').classList.remove('hidden');
+$('f-sub-cat').innerHTML = subs.map(function(s) {
+return '' + s + '';
+}).join('');
+renderFormDynamicFields(m, subs[0], {});
+} else {
+$('wrap-f-subcat').classList.add('hidden');
+$('f-sub-cat').innerHTML = '';
+renderFormDynamicFields(m, "", {});
+}
 };
-
+$('f-sub-cat').onchange = function() {
+renderFormDynamicFields($('f-main-cat').value, $('f-sub-cat').value, {});
+};
+function renderWheelGrid() {
+$('wheel-options-grid').innerHTML = WHEEL_TAGS.map(function(t) {
+return '' + t + '';
+}).join('');
+}
+$('open-wheel-popup-btn').onclick = function() {
+renderWheelGrid();
+$('wheel-popup-modal').classList.remove('hidden');
+};
+$('wheel-options-grid').onclick = function(e) {
+const t = e.target.getAttribute('data-wt');
+if (!t) return;
+if (selectedWheelTags.has(t)) selectedWheelTags.delete(t);
+else selectedWheelTags.add(t);
+renderWheelGrid();
+$('wheel-selected-preview').innerText =
+selectedWheelTags.size > 0 ? [...selectedWheelTags].join('、') : '尚未選擇';
+};
+$('close-wheel-popup').onclick = function() {
+$('wheel-popup-modal').classList.add('hidden');
+};
+function openForm(item) {
+$('modal-form-title').innerText = item ? "編輯外觀" : "新增外觀";
+$('f-id').value = item ? item.id : "";
+const m = item ? (item.mainCat || currentMainTab) : currentMainTab;
+$('f-main-cat').value = m;
+const subs = SCHEMA[m].subs;
+let s = "";
+if (subs.length > 0) {
+$('wrap-f-subcat').classList.remove('hidden');
+$('f-sub-cat').innerHTML = subs.map(function(x) {
+return '' + x + '';
+}).join('');
+s = (item && subs.includes(item.subCat))
+? item.subCat
+: ($('subcat-filter').value || subs[0]);
+$('f-sub-cat').value = s;
+} else {
+$('wrap-f-subcat').classList.add('hidden');
+$('f-sub-cat').innerHTML = '';
+}
+$('f-name').value = item ? (item.name || "") : "";
+$('f-link').value = item ? (item.link || "") : "";
+$('f-note').value = item ? (item.note || "") : "";
+$('f-media').value = item ? ((item.images || []).join('\n')) : "";
+selectedWheelTags = new Set(item && item.wheelTags ? item.wheelTags : []);
+renderFormDynamicFields(m, s, item || {});
+$('form-modal').classList.remove('hidden');
+}
+$('open-add-btn').onclick = function() { openForm(null); };
+$('close-form-x').onclick = $('cancel-form-btn').onclick = function() {
+$('form-modal').classList.add('hidden');
+};
+$('save-form-btn').onclick = async function() {
+const name = $('f-name').value.trim();
+if (!name) return alert("請填寫外觀名稱！");
+const btn = $('save-form-btn');
+btn.disabled = true;
+btn.innerText = "儲存中...";
+try {
+const id = $('f-id').value;
+const m = $('f-main-cat').value;
+const s = $('f-sub-cat').value;
+const rule = getRule(m, s);
+const p = {
+mainCat: m,
+subCat: s,
+name: name,
+link: $('f-link').value.trim(),
+note: $('f-note').value.trim(),
+images: $('f-media').value.split('\n').map(function(u) {
+return u.trim();
+}).filter(Boolean)
+};
+Object.keys(FIELD_META).forEach(function(k) {
+const el = $('df-' + k);
+p[k] = el ? el.value.trim() : "";
+});
+p.freeSource = rule.hasFreeSource && $('df-freeSource')
+? $('df-freeSource').value
+: "";
+p.wheelTags = rule.hasWheelTags ? [...selectedWheelTags] : [];
+if (id) {
+await db.collection("outfits").doc(id).update(p);
+} else {
+p.createdAt = Date.now();
+await db.collection("outfits").add(p);
+}
+$('form-modal').classList.add('hidden');
+loadData();
+} catch (e) {
+alert("儲存失敗：" + e.message);
+} finally {
+btn.disabled = false;
+btn.innerText = "儲存";
+}
+};
 async function loadData() {
-  $('status-text').innerText = "載入中…";
-  try {
-    const snap = await db.collection("outfits").get();
-    allItems = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    updateDynamicTagFilter();
-    renderCards();
-  } catch (e) {
-    $('status-text').innerText = "讀取失敗：" + e.message;
-  }
+$('status-text').innerText = "載入中…";
+try {
+const snap = await db.collection("outfits").get();
+allItems = snap.docs.map(function(d) {
+return Object.assign({ id: d.id }, d.data());
+});
+updateDynamicTagFilter();
+renderCards();
+} catch (e) {
+$('status-text').innerText = "讀取失敗：" + e.message;
 }
-
-const isVideo = u => { const l = u.toLowerCase().split('?'); return l.endsWith('.mp4') || l.endsWith('.webm') || l.endsWith('.ogg'); };
-
-function formatCell(item, key) {
-  if (!key) return '<div class="align-cell"></div>';
-  const val = item[key];
-  const label = FIELD_META[key].label;
-  if (key === "price") return '<div class="align-cell align-accent">' + (val ? val : '-') + '</div>';
-  if (key === "cnDate" || key === "twDate") return '<div class="align-cell align-muted">' + (val || '未上線') + '</div>';
-  if (key === "cnVer" || key === "twVer") return '<div class="align-cell align-muted">' + (val ? '[' + val + ']' : '-') + '</div>';
-  return '<div class="align-cell">' + (val ? '<span style="color:var(--muted)">' + label + ':</span>' + val : '<span style="color:var(--muted)">' + label + ':-</span>') + '</div>';
 }
-
+function isVideo(u) {
+const l = u.toLowerCase().split('?')[0];
+return l.endsWith('.mp4') || l.endsWith('.webm') || l.endsWith('.ogg');
+}
+function fmtCell(i, k) {
+if (!k) return '';
+const v = i[k];
+const lb = FIELD_META[k].label;
+if (k === "price") {
+return '' + (v || '-') + '';
+}
+if (k === "cnDate" || k === "twDate") {
+return '' + (v || '未上線') + '';
+}
+if (k === "cnVer" || k === "twVer") {
+return '' +
+(v ? '[' + v + ']' : '-') + '';
+}
+return '' +
+lb + ':' + (v || '-') + '';
+}
 function renderCards() {
-  const sub = $('subcat-filter').value;
-  const kw = $('search-input').value.toLowerCase();
-  const unrel = $('tw-unreleased').checked;
-  const today = new Date().toISOString().slice(0, 10);
-
-  let list = allItems.filter(i => {
-    if ((i.mainCat || "時裝") !== currentMainTab) return false;
-    if (sub && i.subCat !== sub) return false;
-    if (unrel && i.twDate && i.twDate <= today) return false;
-    if (selectedFilterTags.size > 0) {
-      const itemTags = new Set([
-        ...(i.wheelTags || []),
-        i.freeSource, i.tianShang, i.season, i.collab, i.grandPrize, i.advance, i.gift, i.color, i.grade, i.location, i.limitBuy, i.series
-      ].filter(Boolean));
-      for (let t of selectedFilterTags) if (!itemTags.has(t)) return false;
-    }
-    if (kw) {
-      const allText = Object.values(i).flat().join(" ").toLowerCase();
-      if (!allText.includes(kw)) return false;
-    }
-    return true;
-  });
-
-  list.sort((a, b) => {
-    const ta = a.twDate || a.cnDate || a.twVer || a.cnVer || String(a.createdAt || 0);
-    const tb = b.twDate || b.cnDate || b.twVer || b.cnVer || String(b.createdAt || 0);
-    return sortDesc ? tb.localeCompare(ta) : ta.localeCompare(tb);
-  });
-
-  $('status-text').innerText = '【' + currentMainTab + (sub ? ' - ' + sub : '') + '】共 ' + list.length + ' 筆外觀資料';
-  $('cards-container').innerHTML = list.map(item => {
-    const rule = getRule(item.mainCat || currentMainTab, item.subCat || "");
-    const cover = (item.images && item.images.length > 0) ? item.images : "";
-    const mediaHtml = cover
-      ? (isVideo(cover) ? '<video src="' + cover + '" class="card-media open-detail" data-id="' + item.id + '" muted loop autoplay></video>' : '<img src="' + cover + '" class="card-media open-detail" data-id="' + item.id + '">')
-      : '<div class="card-media open-detail" data-id="' + item.id + '" style="display:flex;align-items:center;justify-content:center;color:#666;">無預覽圖</div>';
-
-    let alignHtml = '';
-    if (rule.twoCol) {
-      alignHtml = '<div class="align-box two-col">' + rule.row1.slice(0, 2).map(k => formatCell(item, k)).join('') + '</div>';
-    } else {
-      alignHtml = '<div class="align-box">' + rule.row1.map(k => formatCell(item, k)).join('') + rule.row2.map(k => formatCell(item, k)).join('') + '</div>';
-    }
-
-    let extraBadges = '';
-    if (rule.hasFreeSource && item.freeSource) extraBadges += '<span class="badge" style="border-color:var(--primary);color:var(--primary);">' + item.freeSource + '</span>';
-    if (rule.hasWheelTags && item.wheelTags) extraBadges += item.wheelTags.map(t => '<span class="badge">' + t + '</span>').join('');
-
-    return '<div class="card">' + mediaHtml +
-      '<div class="card-body"><div>' +
-        '<div style="font-size:12px; color:var(--muted);">' + item.mainCat + (item.subCat ? ' · ' + item.subCat : '') + '</div>' +
-        '<h3 style="margin:4px 0; font-size:16px;">' + item.name + '</h3>' +
-        alignHtml +
-        (extraBadges ? '<div style="margin-top:6px;">' + extraBadges + '</div>' : '') +
-      '</div>' +
-      '<div style="display:flex; gap:6px; margin-top:10px; padding-top:8px; border-top:1px solid var(--border);">' +
-        '<button type="button" class="edit-item" data-id="' + item.id + '" style="flex:1; padding:5px;">編輯</button>' +
-        '<button type="button" class="btn-danger del-item" data-id="' + item.id + '" style="padding:5px 10px;">刪除</button>' +
-      '</div></div></div>';
-  }).join('');
+const sub = $('subcat-filter').value;
+const kw = $('search-input').value.toLowerCase();
+const unrel = $('tw-unreleased').checked;
+const today = new Date().toISOString().slice(0, 10);
+let list = allItems.filter(function(i) {
+if ((i.mainCat || "時裝") !== currentMainTab) return false;
+if (sub && i.subCat !== sub) return false;
+if (unrel && i.twDate && i.twDate <= today) return false;
+if (selectedFilterTags.size > 0) {
+const s = new Set([
+...(i.wheelTags || []), i.freeSource, i.tianShang, i.season,
+i.collab, i.grandPrize, i.advance, i.gift, i.color,
+i.grade, i.location, i.limitBuy, i.series
+].filter(Boolean));
+for (let t of selectedFilterTags) if (!s.has(t)) return false;
 }
-
-$('app-view').onclick = async e => {
-  const id = e.target.getAttribute('data-id');
-  if (!id) return;
-  const item = allItems.find(i => i.id === id);
-  if (!item) return;
-
-  if (e.target.classList.contains('open-detail')) {
-    const rule = getRule(item.mainCat, item.subCat);
-    const keys = [...new Set([...rule.row1, ...rule.row2].filter(Boolean))];
-    $('d-name').innerText = item.name;
-    let infoLines = ['分類：' + item.mainCat + (item.subCat ? ' / ' + item.subCat : '')];
-    if (rule.hasFreeSource && item.freeSource) infoLines.push('獲取途徑：' + item.freeSource);
-    keys.forEach(k => { if (item[k]) infoLines.push(FIELD_META[k].label + '：' + item[k]); });
-    if (item.link) infoLines.push('公告連結：<a href="' + item.link + '" target="_blank" style="color:var(--primary);">點此開啟</a>');
-    if (item.note) infoLines.push('備註：' + item.note);
-    $('d-info').innerHTML = infoLines.join('<br>');
-    $('d-tags').innerHTML = (item.wheelTags || []).map(t => '<span class="badge">' + t + '</span>').join('');
-    $('d-media').innerHTML = (item.images || []).map(u => isVideo(u) ? '<video src="' + u + '" controls></video>' : '<img src="' + u + '">').join('');
-    $('detail-modal').classList.remove('hidden');
-  }
-  if (e.target.classList.contains('edit-item')) openForm(item);
-  if (e.target.classList.contains('del-item') && confirm('確定刪除「' + item.name + '」？')) {
-    await db.collection("outfits").doc(id).delete();
-    loadData();
-  }
+if (kw) {
+const txt = Object.values(i).flat().join(" ").toLowerCase();
+if (!txt.includes(kw)) return false;
+}
+return true;
+});
+list.sort(function(a, b) {
+const ta = a.twDate || a.cnDate || a.twVer || a.cnVer || String(a.createdAt || 0);
+const tb = b.twDate || b.cnDate || b.twVer || b.cnVer || String(b.createdAt || 0);
+return sortDesc ? tb.localeCompare(ta) : ta.localeCompare(tb);
+});
+$('status-text').innerText =
+'【' + currentMainTab + (sub ? ' - ' + sub : '') +
+'】共 ' + list.length + ' 筆外觀資料';
+$('cards-container').innerHTML = list.map(function(i) {
+const rule = getRule(i.mainCat || currentMainTab, i.subCat || "");
+const c = (i.images && i.images.length > 0) ? i.images[0] : "";
+let m = '無預覽圖';
+if (c) {
+m = isVideo(c)
+? ''
+: '';
+}
+const align = rule.twoCol
+? '' +
+rule.row1.slice(0, 2).map(function(k) { return fmtCell(i, k); }).join('') + ''
+: '' +
+rule.row1.map(function(k) { return fmtCell(i, k); }).join('') +
+rule.row2.map(function(k) { return fmtCell(i, k); }).join('') + '';
+let bg = '';
+if (rule.hasFreeSource && i.freeSource) {
+bg += '' +
+i.freeSource + '';
+}
+if (rule.hasWheelTags && i.wheelTags) {
+bg += i.wheelTags.map(function(t) {
+return '' + t + '';
+}).join('');
+}
+return '' + m + '' +
+'' +
+i.mainCat + (i.subCat ? ' · ' + i.subCat : '') + '' +
+'' + i.name + '' +
+align + (bg ? '' + bg + '' : '') +
+'' +
+'編輯' +
+'刪除';
+}).join('');
+}
+$('app-view').onclick = async function(e) {
+const id = e.target.getAttribute('data-id');
+if (!id) return;
+const i = allItems.find(function(x) { return x.id === id; });
+if (!i) return;
+if (e.target.classList.contains('open-detail')) {
+const rule = getRule(i.mainCat, i.subCat);
+const keys = [...new Set([...rule.row1, ...rule.row2].filter(Boolean))];
+$('d-name').innerText = i.name;
+let ln = ['分類：' + i.mainCat + (i.subCat ? ' / ' + i.subCat : '')];
+if (rule.hasFreeSource && i.freeSource) ln.push('獲取途徑：' + i.freeSource);
+keys.forEach(function(k) {
+if (i[k]) ln.push(FIELD_META[k].label + '：' + i[k]);
+});
+if (i.link) {
+ln.push('公告連結：點此開啟');
+}
+if (i.note) ln.push('備註：' + i.note);
+$('d-info').innerHTML = ln.join('
+');
+$('d-tags').innerHTML = (i.wheelTags || []).map(function(t) {
+return '' + t + '';
+}).join('');
+$('d-media').innerHTML = (i.images || []).map(function(u) {
+return isVideo(u)
+? ''
+: '';
+}).join('');
+$('detail-modal').classList.remove('hidden');
+}
+if (e.target.classList.contains('edit-item')) openForm(i);
+if (e.target.classList.contains('del-item') &&
+confirm('確定刪除「' + i.name + '」？')) {
+await db.collection("outfits").doc(id).delete();
+loadData();
+}
 };
-
-$('close-detail-btn').onclick = () => $('detail-modal').classList.add('hidden');
-
-$('export-btn').onclick = () => {
-  const b = new Blob([JSON.stringify(allItems, null, 2)], { type: "application/json" });
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(b);
-  a.download = 'nsh-outfits-' + new Date().toISOString().slice(0, 10) + '.json';
-  a.click();
+$('close-detail-btn').onclick = function() {
+$('detail-modal').classList.add('hidden');
 };
-
-$('import-btn').onclick = () => $('import-file').click();
-$('import-file').onchange = async e => {
-  const f = e.target.files;
-  if (!f) return;
-  try {
-    const arr = JSON.parse(await f.text());
-    if (!Array.isArray(arr)) throw new Error("格式錯誤");
-    for (const o of arr) {
-      const { id, ...c } = o;
-      c.mainCat = c.mainCat || "時裝";
-      c.createdAt = c.createdAt || Date.now();
-      await db.collection("outfits").add(c);
-    }
-    alert('成功匯入 ' + arr.length + ' 筆資料！');
-    loadData();
-  } catch (err) {
-    alert("匯入失敗：" + err.message);
-  }
+$('export-btn').onclick = function() {
+const b = new Blob(
+[JSON.stringify(allItems, null, 2)],
+{ type: "application/json" }
+);
+const a = document.createElement("a");
+a.href = URL.createObjectURL(b);
+a.download = 'nsh-outfits-' + new Date().toISOString().slice(0, 10) + '.json';
+a.click();
 };
-</script>
-</body>
-</html>
+$('import-btn').onclick = function() { $('import-file').click(); };
+$('import-file').onchange = async function(e) {
+const f = e.target.files[0];
+if (!f) return;
+try {
+const arr = JSON.parse(await f.text());
+if (!Array.isArray(arr)) throw new Error("格式錯誤");
+for (let idx = 0; idx < arr.length; idx++) {
+const { id, ...c } = arr[idx];
+c.mainCat = c.mainCat || "時裝";
+c.createdAt = c.createdAt || Date.now();
+await db.collection("outfits").add(c);
+}
+alert('成功匯入 ' + arr.length + ' 筆資料！');
+loadData();
+} catch (err) {
+alert("匯入失敗：" + err.message);
+}
+};
+} catch (err) {
+document.getElementById('login-msg').innerText = "錯誤：" + err.message;
+}
+})();
