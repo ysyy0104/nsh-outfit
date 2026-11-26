@@ -424,7 +424,7 @@ label { font-size: 12px; color: var(--muted); display: block; margin-top: 8px; }
       pool = FREE_SOURCES;
     } else {
       const vals = new Set();
-      const fKeys = ["tianShang", "season", "collab", "grandPrize", "advance", "gift", "color", "grade", "location", "limitBuy", "series", "freeSource"];
+      const fKeys = ["tianShang", "season", "collab", "grandPrize", "advance", "gift", "grade", "location", "limitBuy", "series", "freeSource"];
       allItems.filter(i => i.mainCat === currentMainTab && (!sub || i.subCat === sub))
         .forEach(i => fKeys.forEach(k => { if (i[k]) vals.add(i[k]); }));
       pool = [...vals];
